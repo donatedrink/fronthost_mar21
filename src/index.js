@@ -1,14 +1,65 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import store from './Common/redux/Store';
+import Guest from './Guest/Guest';
+
+import ProtectedRoute from './Common/ProtectedRoute';
+import Home from './Common/Home';
+import Login from './Login';
+
+import reportWebVitals from "./reportWebVitals";
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import { persistStore } from 'redux-persist';
+const root = ReactDOM.createRoot(document.getElementById("root"));
+let persistor = persistStore(store);
+
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  <Provider store={store}>
+    <PersistGate loading={null} persistor={persistor}>
+      <React.StrictMode>
+        <BrowserRouter basename={"/"}>
+          <Routes>
+            <Route path="/guest" element={<Guest />}>
+              <Route path="login" element={<Login />} />
+            </Route>
+            <Route path="/" element={<App />}>
+              <Route
+                path=""
+                element={
+                  <ProtectedRoute>
+                    <Home />
+                  </ProtectedRoute>
+                }
+              />
+              {/* <Route path='/estrahel' element={<Estrahel/>} /> */}
+
+              {/* Collaterals  */}
+
+              {/* Reports  */}
+
+              {/* General  */}
+
+              {/* Distribution  */}
+
+              {/* Auditor  loanonauditor */}
+
+              {/* Applicant  */}
+
+              {/* Officer  */}
+
+              {/* Admin Request  */}
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </React.StrictMode>
+    </PersistGate>
+  </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function

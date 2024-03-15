@@ -1,0 +1,149 @@
+{
+  "auth": {
+    "login": "ግባ",
+    "logout": "ይውጡ",
+    "username": "የተጠቃሚ ስም",
+    "email": "የተጠቃሚ ኢሜይል",
+    "password": "የይለፍ ቃል",
+    "forgotpassword": "መክፈቻ ቁልፉን ረሳኽው",
+    "language": "EN",
+    "phonenumber": "ስልክ ቁጥር",
+    "oldpin": "የአሁኑ የይለፍ ቃል",
+    "newpin": "አዲስ የይለፍ ቃል",
+    "confirmnewpin": "አዲስ የይለፍ ቃል ያረጋግጡ"
+  },
+  "stack": {
+    "login": "ግባ",
+    "logout": "ይውጡ",
+    "aboutus": "ስለ እኛ",
+    "home": "ዋና",
+    "myaccount": "ዋና",
+    "profile": "ግላዊ መረጃ",
+    "usageinfo": "የተጠቃሚ መረጃ",
+    "changepin": "የሚስጥር ቁጥር መቀየርያ",
+    "privacypolicy": "ግላዊ መመርያ",
+    "termsconditions": "ውሎች እና ትግበራዎች"
+  },
+  "plan": {
+    "plan": "እቅድ",
+    "monthly": "ወርሃዊ",
+    "weekly": "በየሳምንቱ",
+    "daily": "በየቀኑ",
+    "callcard": "የጥሪ ካርድ"
+  },
+  "home": {
+    "home": "ዋና",
+    "usageinfo": "የተጠቃሚ መረጃ",
+    "rewards": "ሽልማት",
+    "scan": "ይቃኙ",
+    "send": "ላክ",
+    "receive": "ተቀበል",
+    "donate": "ለግሱ",
+    "coin": "የተሰበሰበ ነጥብ",
+    "everygoodactcounts": "በጎነት ዋጋ እለው፡፡",
+    "consumeanddonate": "እየተዝናኑ ይርዱ",
+    "productsusedsofar": "እስከ አሁን ድረስ እነዚህን ምርቶች ተጠቅማችኋል።",
+    "yourwinlist": "የእርስዎ ሽልማት / ያሸነፉት ዝርዝር",
+    "showHistory": "ታሪክ አሳይ",
+    "chartsummary": "የገበታ ማጠቃለያ",
+    "products": "ምርቶች",
+    "scanned": "ተቃኘ",
+    "coins": "ሳንቲሞች",
+    "collected": "የተሰበሰበ",
+    "donated": "የተበረከተ",
+    "money": "ገንዘብ",
+    "customers": "ደንበኞች"
+  },
+  "register": {
+    "register": "ይመዝገቡ",
+    "welcome": "እንኳን ደህና መጡ !",
+    "phonenum": "ስልክ ቁጥር",
+    "doyouhaveaccount": "መለያ አለህ?",
+    "youmustbe": "ምርታችንን ለመጠቀም ህጋዊ የመጠጥ ዕድሜ መሆን አለብዎት.",
+    "enterphonenum": "ስልክ ቁጥር ያስገቡ",
+    "over21ornot": "ዕድሜህ 18 እና ከዚያ በላይ ነዎት?",
+    "enterusername": "የተጠቃሚ ስም አስገባ"
+  },
+  "login": {
+    "login": "ግባ",
+    "pin": "ፒን",
+    "enterpin": "ፒን አስገባ",
+    "forgetpin": "ፒንኮድ ረሳሁ?",
+    "forgetpinrequest": "ፒንኮድ ረሳሁ",
+    "changepin": "የሚስጥር ቁጥር መቀየርያ",
+    "changeuser": "ተጠቃሚ ቀይር",
+    "phonenumber": "ስልክ ቁጥር ያስገቡ",
+    "4digitpin": "ባለ 4 አሀዝ የይለፍ ቁጥር",
+    "sms": "SMS",
+    "enterpassword": "የይለፍ ቃል ያስገቡ",
+    "forgotpassword": "መክፈቻ ቁልፉን ረሳኽው"
+  },
+  "transaction": {
+    "transaction": "ግብይት",
+    "amount": "የነጥብ ብዛት",
+    "directSend": "ቀጥታ መላክ",
+    "scanToSend": "ለመላክ ይቃኙ",
+    "transSucc": "የሳንቲም ማስተላለፍ ተሳክቷል።",
+    "transErr": "የሳንቲም ማስተላለፍ አልተሳካም።",
+    "close": "ዝጋ",
+    "error": "ስህተት",
+    "successfull": "ስኬታማ"
+  },
+  "donattionDetail": {
+    "name": "ስም",
+    "location": "ቦታ",
+    "about": "ስለ ድርጅቱ",
+    "yes": "አዎ",
+    "no": "አይ",
+    "to": "ለ"
+  },
+  "scan": {
+    "addtowallet": "ስም",
+    "scanhistory": "የስካን ታሪክ",
+    "pointtocamera": "ካሜራውን ወደ QR ያመልክቱ",
+    "continuedonating": "መለገስዎን ይቀጥሉ",
+    "thankyou": "እናመሰግናለን",
+    "congra": "እንኳን ደስ አለህ",
+    "youwon": "አሸንፈዋል",
+    "tryagain": "እንደገና ሞክር",
+    "scanqrcode": "የQR ኮድን ይቃኙ",
+    "goodluck": "መልካም !"
+  },
+  "profile": {
+    "personalinfo": "የግል መረጃዎት",
+    "name": "ስም",
+    "fathername": "የአባት ስም",
+    "email": "ኢሜይል",
+    "gender": "ጾታ",
+    "occupation": "ሥራ",
+    "update": "አዘምን",
+    "male": "ወንድ",
+    "female": "ሴት"
+  },
+  "pin": {
+    "forgetpin": "ፒንኮድ ረሳሁ"
+  },
+  "refresh": {
+    "syncSuccess": "ማመሳሰል አልቋል",
+    "syncFail": "ማመሳሰል አልተሳካም",
+    "noInternet": "ከመስመር ውጭ ነዎት"
+  },
+  "otp": {
+    "confirm": "አረጋግጥ",
+    "resend": "SMS እንደገና ላክ",
+    "close": "ዝጋ"
+  },
+  "dashboard": {
+    "CoinsCollected": "የተሰበሰቡ ሳንቲሞች",
+    "CoinsDonated": "የተበረከተ ሳንቲም",
+    "CustomersList": "የደንበኞች ዝርዝር",
+    "MoneyDonated": "የተበረከተ ገንዘብ",
+    "ProductsList": "ምርቶች ዝርዝር",
+    "ProductsScanned": "የተቃኙ ምርቶች"
+  },
+  "general": {
+    "selectlanguage": "ቋንቋ ይምረጡ",
+    "skip": "ዝለል",
+    "slid0_title": "የመተግበሪያ ማሳያዎች"
+  }
+}

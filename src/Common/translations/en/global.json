@@ -1,0 +1,149 @@
+{
+  "auth": {
+    "login": "login",
+    "logout": "logout",
+    "username": "username",
+    "email": "Email",
+    "password": "password",
+    "forgotpassword": "Forgot Password",
+    "language": "አማ",
+    "phonenumber": "Phone Number",
+    "oldpin": "Old Password",
+    "newpin": "New Password",
+    "confirmnewpin": "Confirm New Password"
+  },
+  "stack": {
+    "login": "login",
+    "logout": "logout",
+    "aboutus": "About Us",
+    "home": "Home",
+    "myaccount": "My Account",
+    "profile": "Profile",
+    "usageinfo": "Usage Information",
+    "changepin": "Change Pin",
+    "privacypolicy": "Privacy and Policy",
+    "termsconditions": "Terms and Conditions"
+  },
+  "plan": {
+    "plan": "PLAN",
+    "monthly": "monthly",
+    "weekly": "weekly",
+    "daily": "daily",
+    "callcard": "callcard"
+  },
+  "home": {
+    "home": "Home",
+    "usageinfo": "Usage Info",
+    "rewards": "Reward",
+    "scan": "Scan",
+    "send": "Send",
+    "receive": "Receive",
+    "donate": "Donate",
+    "coin": "Coins Collected",
+    "everygoodactcounts": "Every Good Act Counts!",
+    "consumeanddonate": "Relax and Donate",
+    "productsusedsofar": "you have used these products so far.",
+    "yourwinlist": "Your Won List",
+    "showHistory": "Show History",
+    "chartsummary": "Chart Summary",
+    "products": "Products",
+    "scanned": "scanned",
+    "coins": "coins",
+    "collected": "collected",
+    "donated": "donated",
+    "money": "money",
+    "customers": "customers"
+  },
+  "register": {
+    "register": "Register",
+    "welcome": "Welcome!",
+    "phonenum": "Phone Number",
+    "doyouhaveaccount": "Do you have account ?",
+    "youmustbe": "You must be legal drinking age to use our product.",
+    "enterphonenum": "Enter your mobile number",
+    "over21ornot": "Are you 18 years old or above?",
+    "enterusername": "Enter User Name"
+  },
+  "login": {
+    "login": "Login",
+    "pin": "Pin",
+    "enterpin": "Enter Pin",
+    "forgetpin": "Forgot Pin?",
+    "forgetpinrequest": "Forget Pin",
+    "changepin": "Change Pin",
+    "changeuser": "Change User",
+    "phonenumber": "Enter Phone Number",
+    "4digitpin": "4 Digit PIN",
+    "sms": "SMS",
+    "enterpassword": "Enter Password",
+    "forgotpassword": "Forgot Password"
+  },
+  "transaction": {
+    "transaction": "Transaction",
+    "amount": "Coin Amount",
+    "directSend": "Direct Send",
+    "scanToSend": "Scan To Send",
+    "transSucc": "Coin Transfer Successful",
+    "transErr": "Coin Transfer Failed",
+    "close": "Close",
+    "error": "Error",
+    "successfull": "Successfull"
+  },
+  "donattionDetail": {
+    "name": "Name",
+    "location": "Location",
+    "about": "About",
+    "yes": "YES",
+    "no": "NO",
+    "to": "To"
+  },
+  "scan": {
+    "addtowallet": "ADD TO MY WALLET",
+    "scanhistory": "HISTROY",
+    "pointtocamera": "Point the camera at the QR Code",
+    "continuedonating": "CONTINUE DONATING",
+    "thankyou": "THANKYOU",
+    "congra": "Congratulations",
+    "youwon": "YOU WON",
+    "tryagain": "TRY AGAIN",
+    "scanqrcode": "Scan QR Code",
+    "goodluck": "Good Luck !"
+  },
+  "profile": {
+    "personalinfo": "Personal Information",
+    "name": "Name",
+    "fathername": "Father Name",
+    "email": "Email",
+    "gender": "Gender",
+    "occupation": "Occupation",
+    "update": "Update",
+    "male": "Male",
+    "female": "Female"
+  },
+  "pin": {
+    "forgetpin": "Forgot Pin"
+  },
+  "refresh": {
+    "syncSuccess": "Sync Finished",
+    "syncFail": "Sync Unsuccessful",
+    "noInternet": "No Internet"
+  },
+  "otp": {
+    "confirm": "Confirm",
+    "resend": "Resend SMS",
+    "close": "Close"
+  },
+  "dashboard": {
+    "CoinsCollected": "Coins Collected",
+    "CoinsDonated": "Coins Donated",
+    "CustomersList": "Customer List",
+    "MoneyDonated": "Money Donated",
+    "ProductsList": "Product List",
+    "ProductsScanned": "Scanned Products"
+  },
+  "general": {
+    "selectlanguage": "select language",
+    "skip": "skip",
+    "slid0_title":"App Showcases"
+  }
+}
