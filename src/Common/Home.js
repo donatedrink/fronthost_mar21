@@ -5,6 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import AdminHome from '../Role_Admin/AdminHome';
 
 import ApplicantHome from '../Role_Applicant/ApplicantHome';
+import OfficerHome from '../Role_Officer/OfficerHome';
+import OfficerHeadHome from '../Role_Officer_Head/OfficerHeadHome';
+import AuditorHome from '../Role_Auditor/AuditorHome';
 
 import { setSideBar } from '../Common/redux/systemLookups';
 import { custLogout } from '../Common/redux/customerAuthSlice';
@@ -30,9 +33,9 @@ const Home = () => {
         {data.groups[0] === 'ROLE_ADMIN' && <AdminHome />}
         {data.groups[0] === 'ROLE_APPLICANT' && <ApplicantHome />}
         {data.groups[0] === 'ROLE_DISTRIBUTOR' && <ApplicantHome />}
-        {data.groups[0] === 'ROLE_OFFICER' && <ApplicantHome />}
-        {data.groups[0] === 'ROLE_OFFICER_HEAD' && <ApplicantHome />}
-        {data.groups[0] === 'ROLE_AUDITOR' && <ApplicantHome />}
+        {data.groups[0] === 'ROLE_OFFICER' && <OfficerHome />}
+        {data.groups[0] === 'ROLE_OFFICER_HEAD' && <OfficerHeadHome />}
+        {data.groups[0] === 'ROLE_AUDITOR' && <AuditorHome />}
         {data.groups[0] === 'ROLE_PLANNER' && <ApplicantHome />}
       </Container>
     </React.Fragment>

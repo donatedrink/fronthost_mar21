@@ -26,6 +26,7 @@ function AuthenticatedNav() {
                 {data.groups[0] === 'ROLE_ADMIN' ? ' Administrator' : ''}
                 {data.groups[0] === 'ROLE_DISTRIBUTOR' ? ' Distributor' : ''}
                 {data.groups[0] === 'ROLE_AUDITOR' ? ' Auditor' : ''}
+                {data.groups[0] === 'ROLE_OFFICER_HEAD' ? ' Officer Head' : ''}
                 
                 
               </div>
