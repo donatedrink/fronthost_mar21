@@ -24,6 +24,13 @@ import LoanListApplicant from "./Role_Applicant/LoanListApplicant";
 // Role_Officer
 import LoanOnOfficer from "./Role_Officer/LoanOnOfficer";
 
+// Collaterals
+import Collaterals from "./Collaterals/Collaterals";
+import CarCollateralFiles from "./Collaterals/CarCollateralFiles";
+
+// Common 
+import CustomerProfileEdit from "./Common/CustomerProfileEdit";
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 let persistor = persistStore(store);
 
@@ -49,6 +56,9 @@ root.render(
               {/* <Route path='/estrahel' element={<Estrahel/>} /> */}
 
               {/* Collaterals  */}
+              <Route path="/collaterals/:loanId" element={<Collaterals />} />
+              <Route path="/carcollateralfiles/:collateralId" element={<CarCollateralFiles />} />
+              {/* <Route path="/collateralcarmarketvalue/:carId" element={<CollateralCarMarketValueEdit />} /> */}
 
               {/* Reports  */}
 
@@ -60,6 +70,7 @@ root.render(
 
               {/* Applicant  */}
               <Route path="loanlistapplicant" element={ <LoanListApplicant />} />
+              <Route path="/customerprofileedit/:customerId" element={<CustomerProfileEdit />} />
 
               {/* Officer  */}
               <Route path="/loanonofficer/:customerId/:loanId" element={<LoanOnOfficer />} />

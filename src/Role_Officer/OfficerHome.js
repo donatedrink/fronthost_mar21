@@ -44,7 +44,7 @@ function OfficerHome() {
             <tbody>
               {loans.map((loan) => {
                 {
-                  if ((loan.customer?.entityExternalId%1000)%100%10 == data.id) {
+                  if ((loan.customer?.entityExternalId%1000)%100%10 === data.id) {
                     return (
                       <tr>
                         <td> {loan.customer?.entityExternalId} </td>
