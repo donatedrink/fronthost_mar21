@@ -16,8 +16,17 @@ import reportWebVitals from "./reportWebVitals";
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
+
+// Role_Applicant 
+// import LoanOnApplicant from "./Role_Applicant/LoanOnApplicant"
+import LoanListApplicant from "./Role_Applicant/LoanListApplicant";
+
+// Role_Officer
+import LoanOnOfficer from "./Role_Officer/LoanOnOfficer";
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 let persistor = persistStore(store);
+
 
 root.render(
   <Provider store={store}>
@@ -50,8 +59,11 @@ root.render(
               {/* Auditor  loanonauditor */}
 
               {/* Applicant  */}
+              <Route path="loanlistapplicant" element={ <LoanListApplicant />} />
 
               {/* Officer  */}
+              <Route path="/loanonofficer/:customerId/:loanId" element={<LoanOnOfficer />} />
+
 
               {/* Admin Request  */}
             </Route>

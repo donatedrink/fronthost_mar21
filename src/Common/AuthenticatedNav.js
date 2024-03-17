@@ -26,14 +26,12 @@ function AuthenticatedNav() {
                 {data.groups[0] === 'ROLE_ADMIN' ? ' Administrator' : ''}
                 {data.groups[0] === 'ROLE_DISTRIBUTOR' ? ' Distributor' : ''}
                 {data.groups[0] === 'ROLE_AUDITOR' ? ' Auditor' : ''}
-                {data.groups[0] === 'ROLE_OFFICER_HEAD' ? ' Officer Head' : ''}
-                
-                
+                {data.groups[0] === 'ROLE_OFFICER_HEAD' ? ' Officer Head' : ''}              
               </div>
             </a>
           </Navbar.Brand>
           <Nav className="me-auto">
-            {data.groups[0] === 'ROLE_APPLICANT' && <Nav.Link href="/onlps">Processed-Loans</Nav.Link>}
+            {data.groups[0] === 'ROLE_APPLICANT' && <Nav.Link href="/loanlistapplicant">Processed-Loans</Nav.Link>}
 
             {data.groups[0] === 'ROLE_OFFICER' && (
               <NavDropdown title="Reports" id="basic-nav-dropdown">
