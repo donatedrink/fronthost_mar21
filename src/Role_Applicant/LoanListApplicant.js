@@ -163,9 +163,12 @@ function LoanListApplicant() {
                     <td>
                       <LoanStatus loan={loan} />
                     </td>
-                    <td></td>
+                    <td>
+                      <a href={`/review/${loan.customer?.id}/${loan.id}`}>
+                        Review
+                      </a>
+                    </td>
                   </tr>
-
                 );
               })}
             </tbody>

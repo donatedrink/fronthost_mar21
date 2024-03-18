@@ -12,6 +12,7 @@ function Checklist() {
   const [chklist, setChklist] = useState([]);
   const [chklistType, setChklistType] = useState([]);
   const [name, setName] = useState('');
+  const [amName, setAmName] = useState('');
 
   const [modalAdd, setModalAdd] = useState(false);
   const [modalEdit, setModalEdit] = useState(false);
@@ -50,9 +51,9 @@ function Checklist() {
 
   const saveCheckList = () => {
     axios
-      .post(`http://localhost:8000/checklist/checklist`, {
+      .post(`http://localhost:8000/checklist/checklists/`, {
         enName: name,
-        amName: name,
+        amName: amName,
         isMandatory: true,
         parent: chktypeid
       })
@@ -67,9 +68,9 @@ function Checklist() {
   };
   const editCheckList = () => {
     axios
-      .patch(`http://localhost:8000/checklist/checklist/${targetObj.id}`, {
+      .patch(`http://localhost:8000/checklist/checklists/${targetObj.id}/`, {
         enName: name,
-        amName: name
+        amName: amName
       })
       .then((res) => {
         console.log(res.data);
@@ -82,7 +83,7 @@ function Checklist() {
   };
   const deleteCheckList = () => {
     axios
-      .delete(`http://localhost:8000/checklist/checklist/${targetObj.id}`)
+      .delete(`http://localhost:8000/checklist/checklists/${targetObj.id}`)
       .then((res) => {
         console.log(res.data);
         getChecklist();
@@ -107,8 +108,16 @@ function Checklist() {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
+        <InputGroup className="mb-3">
+            <InputGroup.Text id="basic-addon1">ስም </InputGroup.Text>
+            <Form.Control
+              placeholder="ስም"
+              aria-describedby="basic-addon1"
+              onChange={(e) => setAmName(e.target.value)}
+            />
+          </InputGroup>
           <InputGroup className="mb-3">
-            <InputGroup.Text id="basic-addon1">Name</InputGroup.Text>
+            <InputGroup.Text id="basic-addon1">Name </InputGroup.Text>
             <Form.Control
               placeholder="name"
               aria-describedby="basic-addon1"
@@ -130,12 +139,21 @@ function Checklist() {
           <Modal.Title style={{ color: 'orange' }}> Edit </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p style={{ paddingLeft: 10, color: 'red' }}> {targetObj.enName} </p>
+          <InputGroup className="mb-3">
+            <InputGroup.Text id="basic-addon1">ስም </InputGroup.Text>
+            <Form.Control
+              placeholder="ስም"
+              aria-describedby="basic-addon1"
+              value={amName}
+              onChange={(e) => setAmName(e.target.value)}
+            />
+          </InputGroup>
           <InputGroup className="mb-3">
             <InputGroup.Text id="basic-addon1">Name </InputGroup.Text>
             <Form.Control
               placeholder="name"
               aria-describedby="basic-addon1"
+              value={name}
               onChange={(e) => setName(e.target.value)}
             />
           </InputGroup>
@@ -181,7 +199,8 @@ function Checklist() {
           <thead>
             <tr>
               <th>#</th>
-              <th> Name</th>
+              <th> ስም </th>
+              <th> Name </th>
               <th>Action</th>
             </tr>
           </thead>
@@ -191,6 +210,7 @@ function Checklist() {
                 <tr>
                   <td>{chk.id}</td>
                   <td>{chk.amName}</td>
+                  <td>{chk.enName}</td>
                   <td>
                     <ButtonGroup size="sm">
                      
@@ -207,6 +227,8 @@ function Checklist() {
                         onClick={() => {
                           setModalEdit(true);
                           setTargetObj(chk);
+                          setName(chk.enName)
+                          setAmName(chk.amName)
                         }}
                       />
                     </ButtonGroup>

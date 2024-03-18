@@ -1,10 +1,57 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Badge, Card, ListGroup, ListGroupItem } from "react-bootstrap";
+import { Badge, ListGroup } from "react-bootstrap";
 
 function AdminHome() {
   const [allCheckListTypes, setAllCheckListTypes] = useState([]);
+  const [carManufactures, setCarManufactures] = useState([]);
+  const [carModels, setCarModels] = useState([]);
+  const [homeTypes, setHomeTypes] = useState([]);
+
   useEffect(() => {
+    allChecklistTypes();
+    carManufactureYear();
+    carModel();
+    homeType();
+  }, []);
+
+  const carManufactureYear = () => {
+    axios
+      .get(`http://localhost:8000/car_manufacturer/carmanufacture`)
+      .then((res) => {
+        console.log(res.data);
+        setCarManufactures(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const carModel = () => {
+    axios
+      .get(`http://localhost:8000/car_model/cars`)
+      .then((res) => {
+        console.log(res.data);
+        setCarModels(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const homeType = () => {
+    axios
+      .get(`http://localhost:8000/home_type/hometypes`)
+      .then((res) => {
+        console.log(res.data);
+        setHomeTypes(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const allChecklistTypes = () => {
     axios
       .get(`http://localhost:8000/checklist_type/checklisttypes`)
       .then((res) => {
@@ -14,7 +61,9 @@ function AdminHome() {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  };
+
+
   return (
     <div className="container">
       <div className="row">
@@ -33,7 +82,7 @@ function AdminHome() {
           >
             Check Lists
           </div>
-          
+
           <ListGroup as="ol" numbered>
             {allCheckListTypes.length > 0 &&
               allCheckListTypes.map((chktype) => {
@@ -79,7 +128,7 @@ function AdminHome() {
                 የመኪና ሞዴል
               </div>
               <Badge bg="primary" pill>
-                14
+                {carModels.length}
               </Badge>
             </ListGroup.Item>
             <ListGroup.Item
@@ -89,10 +138,10 @@ function AdminHome() {
             >
               <div className="ms-2 me-auto">
                 <div className="fw-bold"> CarManufactureYear </div>
-                የመኪና ምርት ዘመን 
+                የመኪና ምርት ዘመን
               </div>
               <Badge bg="primary" pill>
-                14
+                {carManufactures.length}
               </Badge>
             </ListGroup.Item>
             <ListGroup.Item
@@ -105,7 +154,7 @@ function AdminHome() {
                 የቤት አይነት
               </div>
               <Badge bg="primary" pill>
-                14
+                {homeTypes.length}
               </Badge>
             </ListGroup.Item>
           </ListGroup>

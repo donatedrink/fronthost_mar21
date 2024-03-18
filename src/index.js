@@ -2,22 +2,22 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import store from './Common/redux/Store';
-import Guest from './Guest/Guest';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import store from "./Common/redux/Store";
+import Guest from "./Guest/Guest";
 
-import ProtectedRoute from './Common/ProtectedRoute';
-import Home from './Common/Home';
-import Login from './Login';
+import ProtectedRoute from "./Common/ProtectedRoute";
+import Home from "./Common/Home";
+import Login from "./Login";
 
 import reportWebVitals from "./reportWebVitals";
-import { Provider } from 'react-redux';
-import { PersistGate } from 'redux-persist/integration/react';
-import { persistStore } from 'redux-persist';
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+import { persistStore } from "redux-persist";
 
-// Role_Applicant 
+// Role_Applicant
 // import LoanOnApplicant from "./Role_Applicant/LoanOnApplicant"
 import LoanListApplicant from "./Role_Applicant/LoanListApplicant";
 
@@ -34,13 +34,13 @@ import LoanOnOfficer from "./Role_Officer/LoanOnOfficer";
 import Collaterals from "./Collaterals/Collaterals";
 import CarCollateralFiles from "./Collaterals/CarCollateralFiles";
 
-// Common 
+// Common
 import CustomerProfileEdit from "./Common/CustomerProfileEdit";
 import LoanOnApplicant from "./Role_Applicant/LoanOnApplicant";
+import Review from "./Review/Review";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 let persistor = persistStore(store);
-
 
 root.render(
   <Provider store={store}>
@@ -60,38 +60,48 @@ root.render(
                   </ProtectedRoute>
                 }
               />
-              {/* <Route path='/estrahel' element={<Estrahel/>} /> */}
-
               {/* Collaterals  */}
               <Route path="/collaterals/:loanId" element={<Collaterals />} />
-              <Route path="/carcollateralfiles/:collateralId" element={<CarCollateralFiles />} />
+              <Route
+                path="/carcollateralfiles/:collateralId"
+                element={<CarCollateralFiles />}
+              />
               {/* <Route path="/collateralcarmarketvalue/:carId" element={<CollateralCarMarketValueEdit />} /> */}
 
               {/* Reports  */}
 
               {/* General  */}
+              <Route path="/review/:customerId/:loanId" element={<Review />} />
 
               {/* Distribution  */}
 
-              {/* Auditor  loanonauditor */}
+              {/* Auditor */}
 
               {/* Applicant  */}
-              <Route path="loanlistapplicant" element={ <LoanListApplicant />} />
-              <Route path="/customerprofileedit/:customerId" element={<CustomerProfileEdit />} />
-              <Route path="/loanonapplicant/:customerId/:loanId" element={<LoanOnApplicant />} />
-
+              <Route path="loanlistapplicant" element={<LoanListApplicant />} />
+              <Route
+                path="/customerprofileedit/:customerId"
+                element={<CustomerProfileEdit />}
+              />
+              <Route
+                path="/loanonapplicant/:customerId/:loanId"
+                element={<LoanOnApplicant />}
+              />
 
               {/* Officer  */}
-              <Route path="/loanonofficer/:customerId/:loanId" element={<LoanOnOfficer />} />
-
+              <Route
+                path="/loanonofficer/:customerId/:loanId"
+                element={<LoanOnOfficer />}
+              />
 
               {/* Admin Request  */}
               <Route path="/checklist/:chktypeid" element={<Checklist />} />
               <Route path="/carmodel" element={<CarModel />} />
               <Route path="/hometype" element={<HomeType />} />
-              <Route path="/carmanufactureyear" element={<CarManufactureYear />} />
-
-
+              <Route
+                path="/carmanufactureyear"
+                element={<CarManufactureYear />}
+              />
             </Route>
           </Routes>
         </BrowserRouter>
