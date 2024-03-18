@@ -13,15 +13,18 @@ function CarCollateral(props) {
   const [loan, setLoan] = useState([]);
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
   const [carModels, setCarModels] = useState([]);
   const [carManufactureYear, setCarManufactureYear] = useState([]);
+  const [targetCar, setTargetCar] = useState([]);
 
   const toastSaved = () => toast.success("Car Sussfully Saved!");
   const toastNotSaved = () => toast.error("Error Saving Car details!");
 
   useEffect(() => {
-    getCarCollaterals();
     getCarModels();
+    getCarCollaterals();
     getCarManufactureYears();
   }, []);
 
@@ -88,6 +91,27 @@ function CarCollateral(props) {
       });
   };
 
+  const editCar = () => {
+    console.log("Edit Car");
+    setShowEditModal(false);
+    console.log(targetCar);
+  };
+
+  const deleteCar = () => {
+    axios
+      .delete(
+        `http://localhost:8000/collateral_car/collateralcar/${targetCar.id}`
+      )
+      .then((res) => {
+        console.log(res.data);
+        setShowDeleteModal(false);
+        getCarCollaterals();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <div>
       <ToastContainer />
@@ -100,7 +124,7 @@ function CarCollateral(props) {
         </Button>
       </div>
 
-      {/* add clientDetail modal start  */}
+      {/* add modal Start  */}
       <Modal show={showAddModal} onHide={() => setShowAddModal(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Add Car</Modal.Title>
@@ -272,23 +296,35 @@ function CarCollateral(props) {
           )}
         </Formik>
       </Modal>
-      {/* edit clientDetail modal start  */}
-      {/* add clientDetail modal start  */}
+      {/* add modal End  */}
+
+      {/* edit modal Start  */}
       <Modal show={showEditModal} onHide={() => setShowEditModal(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Edit User</Modal.Title>
         </Modal.Header>
         <Modal.Body>!</Modal.Body>
         <Modal.Footer>
-          <Button
-            variant="primary btn-sm"
-            onClick={() => setShowEditModal(false)}
-          >
-            Save
+          <Button variant="warning btn-sm" onClick={() => editCar()}>
+            Edit
           </Button>
         </Modal.Footer>
       </Modal>
-      {/* edit clientDetail modal start  */}
+      {/* edit modal End  */}
+
+      {/* delete modal Start  */}
+      <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Edit User</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>!</Modal.Body>
+        <Modal.Footer>
+          <Button variant="danger btn-sm" onClick={() => deleteCar()}>
+            Delete
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      {/* delete modal End  */}
 
       <Table striped bordered hover style={{ marginTop: 10 }}>
         <thead>
@@ -314,10 +350,13 @@ function CarCollateral(props) {
                   <td> {car.engineNumber} </td>
                   <td> {car.insuranceValue} </td>
                   <td> {car.model?.enName} </td>
-                  <td>
+                  <td
+                    style={{ display: "flex", justifyContent: "space-evenly" }}
+                  >
                     <FaTrashAlt
                       onClick={() => {
-                        setShowEditModal(true);
+                        setShowDeleteModal(true);
+                        setTargetCar(car);
                       }}
                       color="red"
                     />
@@ -325,6 +364,7 @@ function CarCollateral(props) {
                     <FaPencilAlt
                       onClick={() => {
                         setShowEditModal(true);
+                        setTargetCar(car);
                       }}
                       color="orange"
                     />
