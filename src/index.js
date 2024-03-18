@@ -21,6 +21,12 @@ import { persistStore } from 'redux-persist';
 // import LoanOnApplicant from "./Role_Applicant/LoanOnApplicant"
 import LoanListApplicant from "./Role_Applicant/LoanListApplicant";
 
+// Role_Admin
+import Checklist from "./Role_Admin/Checklist";
+import CarManufactureYear from "./Role_Admin/Lookups/CarManufactureYear";
+import CarModel from "./Role_Admin/Lookups/CarModel";
+import HomeType from "./Role_Admin/Lookups/HomeType";
+
 // Role_Officer
 import LoanOnOfficer from "./Role_Officer/LoanOnOfficer";
 
@@ -80,6 +86,12 @@ root.render(
 
 
               {/* Admin Request  */}
+              <Route path="/checklist/:chktypeid" element={<Checklist />} />
+              <Route path="/carmodel" element={<CarModel />} />
+              <Route path="/hometype" element={<HomeType />} />
+              <Route path="/carmanufactureyear" element={<CarManufactureYear />} />
+
+
             </Route>
           </Routes>
         </BrowserRouter>
