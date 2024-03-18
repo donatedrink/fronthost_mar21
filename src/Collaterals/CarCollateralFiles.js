@@ -44,7 +44,7 @@ function CarCollateralFiles() {
         <Accordion.Item eventKey="2">
           <Accordion.Header> የገበያ ዋጋ ጥናት </Accordion.Header>
           <Accordion.Body>
-            <CarMarketValue  collateralId={collateralId}/>
+            <CarMarketValue collateralId={collateralId}/>
           </Accordion.Body>
         </Accordion.Item>
 

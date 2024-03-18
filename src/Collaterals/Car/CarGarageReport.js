@@ -53,7 +53,7 @@ function CarGarageReport(props) {
 
     const fd = new FormData();
     fd.append("file", file);
-    fd.append("marketValue", garageValue);
+    fd.append("garageValue", garageValue);
     fd.append("collateralcar", props.collateralId);
     fd.append("fileType", file.type);
     fd.append("fileUrl", file);
@@ -64,7 +64,7 @@ function CarGarageReport(props) {
     });
 
     axios
-      .post(`http://localhost:8000/car_marketvalue/carmarketvalues/`, fd, {
+      .post(`http://localhost:8000/car_garagevalue/garagereports/`, fd, {
         onUploadProgress: (progressEvent) => {
           setProgress((prevState) => {
             return { ...prevState, pc: progressEvent.progress * 100 };
@@ -88,13 +88,56 @@ function CarGarageReport(props) {
   }
 
   const handleEdit = () => {
-    console.log("Edit called");
+    if (!file) {
+      setMsg("No File Selected");
+      return;
+    }
+
+    const fd = new FormData();
+    fd.append("file", file);
+    fd.append("garageValue", garageValue);
+    fd.append("collateralcar", props.collateralId);
+    fd.append("fileType", file.type);
+    fd.append("fileUrl", file);
+
+    setMsg("Uploading .... ");
+    setProgress((prevState) => {
+      return { ...prevState, started: true };
+    });
+
+    axios
+      .put(
+        `http://localhost:8000/car_garagevalue/garagereports/${targetGarageValue.id}/`,
+        fd,
+        {
+          onUploadProgress: (progressEvent) => {
+            setProgress((prevState) => {
+              return { ...prevState, pc: progressEvent.progress * 100 };
+            });
+          },
+          headers: {
+            "Custom-Header": "value",
+          },
+        }
+      )
+      .then((res) => {
+        setMsg("Upload Successful");
+        console.log(res.data);
+        setErr(false);
+        setEditModal(false);
+        getAllFiles();
+      })
+      .catch((err) => {
+        setMsg("Upload Failed");
+        console.log(err);
+        setErr(true);
+      });
   };
 
   const handleDelete = () => {
     axios
       .delete(
-        `http://localhost:8000/car_marketvalue/carmarketvalues/${targetGarageValue.id}`
+        `http://localhost:8000/car_garagevalue/garagereports/${targetGarageValue.id}`
       )
       .then((res) => {
         console.log(res.data);
@@ -146,8 +189,53 @@ function CarGarageReport(props) {
         <Modal.Header closeButton>
           <Modal.Title variant="warning"> Edit </Modal.Title>
         </Modal.Header>
-        <Modal.Body></Modal.Body>
-        <Modal.Footer>
+        <Modal.Body>
+          <Card>
+            <CardBody>
+              <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">
+                  Garage Value
+                </span>
+                <input
+                  type="text"
+                  class="form-control"
+                  value={targetGarageValue.garageValue}
+                  onChange={(e) => setGarageValue(e.target.value)}
+                />
+              </div>
+              <InputGroup style={{ paddingTop: 5 }}>
+                <input
+                  onChange={(e) => {
+                    setFile(e.target.files[0]);
+                    console.log(e.target.files[0]);
+                  }}
+                  type="file"
+                  className="form-control"
+                />
+                <Button
+                  variant="outline-warning"
+                  onClick={() => {
+                    handleEdit();
+                  }}
+                >
+                  Update
+                </Button>
+              </InputGroup>
+            </CardBody>
+            <CardFooter>
+              <div>
+                {progress.started && (
+                  <ProgressBar
+                    variant={err ? "danger" : "primary"}
+                    now={progress.pc}
+                  />
+                )}
+              </div>
+              <div>{msg && <span> {msg} </span>}</div>
+            </CardFooter>
+          </Card>
+        </Modal.Body>
+        {/* <Modal.Footer>
           <Button
             variant="warning btn-sm"
             onClick={() => {
@@ -156,7 +244,7 @@ function CarGarageReport(props) {
           >
             Delete
           </Button>
-        </Modal.Footer>
+        </Modal.Footer> */}
       </Modal>
       {/* Modal Edit End  */}
 
@@ -164,14 +252,12 @@ function CarGarageReport(props) {
         <CardBody>
           <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon1">
-            Garage Value
+              Garage Value
             </span>
             <input
               type="text"
               class="form-control"
               placeholder="Garage Value"
-              aria-label="Garage Value"
-              aria-describedby="basic-addon1"
               onChange={(e) => setGarageValue(e.target.value)}
             />
           </div>
@@ -215,8 +301,8 @@ function CarGarageReport(props) {
           </thead>
           <tbody>
             {Object.keys(chklstUploaded).length > 0 &&
-              chklstUploaded.garagevalue.length > 0 &&
-              chklstUploaded.garagevalue.map((upload) => {
+              chklstUploaded.garageReport.length > 0 &&
+              chklstUploaded.garageReport.map((upload) => {
                 return (
                   <tr>
                     <td>{upload.garageValue}</td>
@@ -253,6 +339,7 @@ function CarGarageReport(props) {
               })}
           </tbody>
         </Table>
+        {/*  */}
       </div>
     </div>
   );

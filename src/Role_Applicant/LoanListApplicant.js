@@ -143,6 +143,7 @@ function LoanListApplicant() {
                 <th>Assigned To</th>
                 <th>Assign</th>
                 <th>Status</th>
+                <th>Review</th>
               </tr>
             </thead>
             <tbody>
@@ -162,7 +163,9 @@ function LoanListApplicant() {
                     <td>
                       <LoanStatus loan={loan} />
                     </td>
+                    <td></td>
                   </tr>
+
                 );
               })}
             </tbody>

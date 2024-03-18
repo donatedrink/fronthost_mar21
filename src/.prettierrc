@@ -1,0 +1,18 @@
+{
+    "overrides": [
+      {
+        "files": "*.jsx",
+        "options": {
+          "printWidth": 120,
+          "htmlWhitespaceSensitivity": "ignore",
+          "jsxBracketSameLine": true,
+          "jsxSingleQuote": false,
+          "quoteProps": "as-needed",
+          "semi": false,
+          "singleQuote": true,
+          "trailingComma": "none"
+        }
+      }
+    ]
+  }
+  
