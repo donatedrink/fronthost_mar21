@@ -11,31 +11,24 @@ function CustomerProfileView(props) {
       {Object.keys(props.customer).length > 0 && (
         <ListGroup>
           <ListGroup.Item className="d-flex justify-content-between align-items-start">
-            <div> Full Name </div>
-            <div>{props.customer?.amDisplayName}</div>
+            <div> ሙሉ ስም </div>
+            <div>{props.customer?.amDisplayName }</div>
           </ListGroup.Item>
           <ListGroup.Item className="d-flex justify-content-between align-items-start">
-            <div> Address </div>
-            <div>{props.customer?.amAddress}</div>
+            <div> አድራሻ </div>
+            <div>{props.customer?.amAddress + ", ክ/ከተማ፡ " + props.customer?.amSubcity + ", ወረዳ፡ " + props.customer?.amWoreda + ",  የቤት ቁጥር፡ " + props.customer?.houseNum }</div>
           </ListGroup.Item>
           <ListGroup.Item className="d-flex justify-content-between align-items-start">
-            <div> Phone Number </div>
+            <div> ስለክ ቁጥር </div>
             <div>{props.customer?.mobileNo}</div>
           </ListGroup.Item>
           <ListGroup.Item className="d-flex justify-content-between align-items-start">
-            <div> Marital Status </div>
-            <div>{props.customer?.isMarried ? 'Married' : 'Not Married'}</div>
+            <div> የትዳር ሁኔታ </div>
+            <div>{props.customer?.isMarried ? 'ያገባ' : ' ያላገባ'}</div>
           </ListGroup.Item>
         </ListGroup>
       )}
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-      {/* {props.loan?.auditorApproved === false &&  */}
-        {(data.groups[0] === 'ROLE_OFFICER' || data.groups[0] === 'ROLE_APPLICANT') && (
-          <ListGroup.Item className="d-flex justify-content-between align-items-start">
-            <a href={`/customerprofileedit/${props.customer?.id}`}>Edit</a>
-          </ListGroup.Item>
-        )}
-      </div>
+     
     </div>
   );
 }

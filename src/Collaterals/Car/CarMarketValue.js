@@ -12,6 +12,7 @@ import InputGroup from "react-bootstrap/InputGroup";
 
 function CarMarketValue(props) {
   const [marketValue, setMarketValue] = useState(0);
+
   const [show, setShow] = useState(false);
   const [editModal, setEditModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
@@ -89,7 +90,46 @@ function CarMarketValue(props) {
   }
 
   const handleEdit = () => {
-    console.log("Edit called");
+    if (!file) {
+      setMsg("No File Selected");
+      return;
+    }
+
+    const fd = new FormData();
+    fd.append("file", file);
+    fd.append("marketValue", marketValue);
+    fd.append("collateralcar", props.collateralId);
+    fd.append("fileType", file.type);
+    fd.append("fileUrl", file);
+
+    setMsg("Uploading .... ");
+    setProgress((prevState) => {
+      return { ...prevState, started: true };
+    });
+
+    axios
+      .patch(`http://localhost:8000/car_marketvalue/carmarketvalues/${targetMarketValue.id}/`, fd, {
+        onUploadProgress: (progressEvent) => {
+          setProgress((prevState) => {
+            return { ...prevState, pc: progressEvent.progress * 100 };
+          });
+        },
+        headers: {
+          "Custom-Header": "value",
+        },
+      })
+      .then((res) => {
+        setMsg("Upload Successful");
+        console.log(res.data);
+        setEditModal(false)
+        setErr(false);
+        getAllFiles();
+      })
+      .catch((err) => {
+        setMsg("Upload Failed");
+        console.log(err);
+        setErr(true);
+      });
   };
 
   const handleDelete = () => {
@@ -147,17 +187,39 @@ function CarMarketValue(props) {
         <Modal.Header closeButton>
           <Modal.Title variant="warning"> Edit </Modal.Title>
         </Modal.Header>
-        <Modal.Body></Modal.Body>
-        <Modal.Footer>
-          <Button
-            variant="warning btn-sm"
-            onClick={() => {
-              handleEdit();
-            }}
-          >
-            Delete
-          </Button>
-        </Modal.Footer>
+        <Modal.Body>
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">
+              Market Value
+            </span>
+            <input
+              type="text"
+              class="form-control"
+              value={marketValue}
+              onChange={(e) => setMarketValue(e.target.value)}
+            />
+          </div>
+          <InputGroup style={{ paddingTop: 5 }}>
+            <input
+              onChange={(e) => {
+                setFile(e.target.files[0]);
+                console.log(e.target.files[0]);
+              }}
+              type="file"
+              className="form-control"
+            />
+          </InputGroup>
+          <Modal.Footer>
+            <Button
+              variant="warning btn-sm"
+              onClick={() => {
+                handleEdit();
+              }}
+            >
+              Edit
+            </Button>
+          </Modal.Footer>
+        </Modal.Body>
       </Modal>
       {/* Modal Edit End  */}
 
@@ -238,6 +300,7 @@ function CarMarketValue(props) {
                         onClick={() => {
                           setTargetMarketValue(upload);
                           setEditModal(true);
+                          setMarketValue(upload.marketValue);
                         }}
                         style={{ color: "orange" }}
                       />

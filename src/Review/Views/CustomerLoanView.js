@@ -40,11 +40,7 @@ function CustomerLoanView(props) {
 
 
           {/* {props.loan?.auditorApproved === false && data.groups[0] === 'ROLE_APPLICANT' && ( */}
-             {(data.groups[0] === 'ROLE_OFFICER' || data.groups[0] === 'ROLE_APPLICANT') && (
-            <ListGroup.Item className="d-flex justify-content-between align-items-start">
-              <a href={`/customerloanedit/${props.loan?.customer}/${props.loan?.id}`}>Edit</a>
-            </ListGroup.Item>
-          )}
+           
         </ListGroup>
       )}
     </div>

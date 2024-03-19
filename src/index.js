@@ -39,11 +39,13 @@ import CustomerProfileEdit from "./Common/CustomerProfileEdit";
 import LoanOnApplicant from "./Role_Applicant/LoanOnApplicant";
 import Review from "./Review/Review";
 import LoanOnAuditor from "./Role_Auditor/LoanOnAuditor";
+import CustomerMaritalMarriedEdit from "./Review/Edit/CustomerMaritalMarriedEdit";
+import CustomerMaritalSingleEdit from "./Review/Edit/CustomerMaritalSingleEdit";
+import CustomerLoanEdit from "./Review/Edit/CustomerLoanEdit"
 
 // Report
 import AgreementDoc from "./Reports/AgreementDoc";
 import Reports from "./Reports/Reports";
-
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 let persistor = persistStore(store);
@@ -74,16 +76,21 @@ root.render(
               />
 
               {/* Reports  */}
-              <Route path="/reports/:customerId/:loanId" element={<Reports />} />
+              <Route
+                path="/reports/:customerId/:loanId"
+                element={<Reports />}
+              />
 
               {/* General  */}
               <Route path="/review/:customerId/:loanId" element={<Review />} />
 
               {/* Distribution  */}
 
-
               {/* Auditor */}
-              <Route path="/loanonauditor/:customerId/:loanId" element={<LoanOnAuditor />} />
+              <Route
+                path="/loanonauditor/:customerId/:loanId"
+                element={<LoanOnAuditor />}
+              />
 
               {/* Applicant  */}
               <Route path="loanlistapplicant" element={<LoanListApplicant />} />
@@ -94,6 +101,18 @@ root.render(
               <Route
                 path="/loanonapplicant/:customerId/:loanId"
                 element={<LoanOnApplicant />}
+              />
+              <Route
+                path="/marriedcustomeredit/:customerId"
+                element={<CustomerMaritalMarriedEdit />}
+              />
+              <Route
+                path="/singlecustomeredit/:customerId"
+                element={<CustomerMaritalSingleEdit />}
+              />
+              <Route
+                path="/customerloanedit/:customerId/:loanId"
+                element={<CustomerLoanEdit />}
               />
 
               {/* Officer  */}

@@ -121,14 +121,14 @@ function CarGarageReport(props) {
         }
       )
       .then((res) => {
-        setMsg("Upload Successful");
+        setMsg("Update Successful");
         console.log(res.data);
         setErr(false);
         setEditModal(false);
         getAllFiles();
       })
       .catch((err) => {
-        setMsg("Upload Failed");
+        setMsg("Update Failed");
         console.log(err);
         setErr(true);
       });
@@ -199,7 +199,7 @@ function CarGarageReport(props) {
                 <input
                   type="text"
                   class="form-control"
-                  value={targetGarageValue.garageValue}
+                  value={garageValue}
                   onChange={(e) => setGarageValue(e.target.value)}
                 />
               </div>
@@ -323,6 +323,7 @@ function CarGarageReport(props) {
                         onClick={() => {
                           setTargetGarageValue(upload);
                           setEditModal(true);
+                          setGarageValue(upload.garageValue);
                         }}
                         style={{ color: "orange" }}
                       />
