@@ -29,7 +29,7 @@ function CustomerProfileView(props) {
         </ListGroup>
       )}
       <div style={{ display: 'flex', justifyContent: 'center' }}>
-      {/* {props.loan?.decisionmakerApproved === false &&  */}
+      {/* {props.loan?.auditorApproved === false &&  */}
         {(data.groups[0] === 'ROLE_OFFICER' || data.groups[0] === 'ROLE_APPLICANT') && (
           <ListGroup.Item className="d-flex justify-content-between align-items-start">
             <a href={`/customerprofileedit/${props.customer?.id}`}>Edit</a>

@@ -18,7 +18,7 @@ function CustomerSingleView(props) {
         )}
       </div>
       <div style={{ display: 'flex', justifyContent: 'center' }}>
-      {/* props.loan?.decisionmakerApproved === false &&   */}
+      {/* props.loan?.auditorApproved === false &&   */}
         {(data.groups[0] === 'ROLE_OFFICER' || data.groups[0] === 'ROLE_APPLICANT') && <a href={`/singlecustomeredit/${props.customer?.id}`}>Edit</a>}
       </div>
     </div>

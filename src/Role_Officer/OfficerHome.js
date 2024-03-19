@@ -57,7 +57,7 @@ function OfficerHome() {
                           </a>
                         </td>
                         <td>
-                          {loan.decisionmakerApproved ? (
+                          {loan.auditorApproved ? (
                             <>Approved</>
                           ) : (
                             <>Waiting</>

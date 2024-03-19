@@ -18,7 +18,7 @@ function CustomerMarriedView(props) {
       </div>
 
       <div style={{ display: 'flex', justifyContent: 'center' }}>
-      {/* props.loan?.decisionmakerApproved === false &&  */}
+      {/* props.loan?.auditorApproved === false &&  */}
         {(data.groups[0] === 'ROLE_OFFICER' || data.groups[0] === 'ROLE_APPLICANT') && <a href={`/marriedcustomeredit/${props.customer[0]?.id}`}>Edit</a>}
       </div>
     </div>

@@ -7,6 +7,14 @@ import ListGroup from "react-bootstrap/ListGroup";
 import { useSelector } from "react-redux";
 import Accordion from "react-bootstrap/Accordion";
 
+// import CustomerLoanView from '../Officer/Views/CustomerLoanView';
+// import CustomerProfileView from '../Officer/Views/CustomerProfileView';
+// import CollateralHomeView from '../Officer/Views/CollateralHomeView';
+// import CollateralCarView from '../Officer/Views/CollateralCarView';
+
+// import CustomerSingleView from '../Officer/Views/CustomerSingleView';
+// import CustomerMarriedView from '../Officer/Views/CustomerMarriedView';
+
 import CustomerLoanView from "../Review/Views/CustomerLoanView";
 import CustomerProfileView from "../Review/Views/CustomerProfileView";
 import CollateralHomeView from "../Review/Views/CollateralHomeView";
@@ -16,16 +24,15 @@ import CustomerSingleView from "../Review/Views/CustomerSingleView";
 import CustomerMarriedView from "../Review/Views/CustomerMarriedView";
 
 import { ToastContainer, toast } from "react-toastify";
-import { FaTelegram } from "react-icons/fa";
 
-function LoanOnOfficer() {
+function LoanOnAuditor() {
   const { data } = useSelector((store) => store.customer);
   const { customerId, loanId } = useParams();
   const [customer, setCustomer] = useState([]);
   const [loan, setLoan] = useState([]);
   const [commentText, setCommentText] = useState("");
 
-  const [modalToHeadOfficer, setModalToHeadOfficer] = useState(false);
+  const [modalApprove, setModalApprove] = useState(false);
 
   useEffect(() => {
     getCustomer();
@@ -35,7 +42,7 @@ function LoanOnOfficer() {
 
   const getCustomer = () => {
     axios
-      .get(`http://localhost:8000/customer/customers/${customerId}`)
+      .get(`http://localhost:8000/customer/customer/${customerId}`)
       .then((res) => {
         console.log("customer");
         console.log(res.data);
@@ -77,14 +84,15 @@ function LoanOnOfficer() {
       });
   };
 
-  const sendToHeadOfficer = () => {
+  const approveLoan = () => {
     axios
       .patch(`http://localhost:8000/loan/loans/${loanId}/`, {
-        toho: true,
+        // decisionmakerApproved: true,
+        auditorApproved: true,
       })
       .then((res) => {
         console.log(res.data);
-        setModalToHeadOfficer(false);
+        setModalApprove(false);
         toast.success("Sucessfully Approved");
         getLoan();
       })
@@ -93,23 +101,23 @@ function LoanOnOfficer() {
       });
   };
 
+  const availableCss = { backgroundColor: "red", color: "white" };
+  const nullCss = { backgroundColor: "red", color: "white" };
+
   return (
     <div className="container">
       {/* Modal Edit Start  */}
-      <Modal
-        show={modalToHeadOfficer}
-        onHide={() => setModalToHeadOfficer(false)}
-      >
+      <Modal show={modalApprove} onHide={() => setModalApprove(false)}>
         <Modal.Header closeButton>
-          <Modal.Title style={{ color: "orange" }}>
-            {" "}
-            Send To Head Officer{" "}
-          </Modal.Title>
+          <Modal.Title style={{ color: "orange" }}> Approve Loan </Modal.Title>
         </Modal.Header>
-        <Modal.Body></Modal.Body>
+        <Modal.Body>
+          Are you sure to approve{" "}
+          <strong> {loan.approvedPrincipal?.toLocaleString()} </strong> Loan
+        </Modal.Body>
         <Modal.Footer>
-          <Button variant="warning" onClick={() => sendToHeadOfficer()}>
-            <FaTelegram /> Send To Head Officer
+          <Button variant="warning" onClick={() => approveLoan()}>
+            Approve
           </Button>
         </Modal.Footer>
       </Modal>
@@ -129,21 +137,17 @@ function LoanOnOfficer() {
               <b>{customer.amDisplayName}</b>
             </div>
             <div>
-              {/* <a href={`/review/${loanId}`}>REVIEW</a> &nbsp;
+              <a href={`/review/${loanId}`}>REVIEW</a> &nbsp;
               {loan.auditorApproved ? (
                 <>APPROVED</>
               ) : (
-                <Button onClick={() => setModalApprove(true)} className="btn btn-sm">
+                <Button
+                  onClick={() => setModalApprove(true)}
+                  className="btn btn-sm"
+                >
                   Approve
                 </Button>
-              )} */}
-
-              <Button
-                onClick={() => setModalToHeadOfficer(true)}
-                className="btn btn-sm"
-              >
-                <FaTelegram /> To Head Officer
-              </Button>
+              )}
             </div>
           </Alert>
         </div>
@@ -158,58 +162,58 @@ function LoanOnOfficer() {
               </Accordion.Body>
             </Accordion.Item>
             <Accordion.Item eventKey="2">
-              {loan.isMarried ? (
-                <>
-                  <Accordion.Header>
-                    የተበዳሪ (የትዳር ሁኔታ) ያገባ ዶክመንቶች
-                  </Accordion.Header>
-                  <Accordion.Body>
-                    <CustomerMarriedView
-                      customer={customer}
-                      marriedgeneralfiles={customer.marriedgeneralfiles}
-                    />
-                  </Accordion.Body>
-                </>
-              ) : (
-                <>
-                  <Accordion.Header>
-                    የተበዳሪ (የትዳር ሁኔታ) ያላገባ ዶክመንቶች
-                  </Accordion.Header>
-                  <Accordion.Body>
-                    <CustomerSingleView
-                      customer={customer}
-                      singlegeneralfiles={customer.singlegeneralfiles}
-                    />
-                  </Accordion.Body>
-                </>
-              )}
+              <Accordion.Header>
+                የተበዳሪ (የትዳር ሁኔታ) {" " + loan.isMarried ? "ያገባ" : "ያላገባ" + " "}{" "}
+                ዶክመንቶች
+              </Accordion.Header>
+              <Accordion.Body>
+                {loan.isMarried ? (
+                  <>
+                    <Accordion.Header>
+                      የተበዳሪ (የትዳር ሁኔታ) ያገባ ዶክመንቶች
+                    </Accordion.Header>
+                    <Accordion.Body>
+                      <CustomerMarriedView
+                        customer={customer}
+                        marriedgeneralfiles={customer.marriedgeneralfiles}
+                      />
+                    </Accordion.Body>
+                  </>
+                ) : (
+                  <>
+                    <Accordion.Header>
+                      የተበዳሪ (የትዳር ሁኔታ) ያላገባ ዶክመንቶች
+                    </Accordion.Header>
+                    <Accordion.Body>
+                      <CustomerSingleView
+                        customer={customer}
+                        singlegeneralfiles={customer.singlegeneralfiles}
+                      />
+                    </Accordion.Body>
+                  </>
+                )}
+              </Accordion.Body>
             </Accordion.Item>
             <Accordion.Item eventKey="3">
-              <Accordion.Header
-                style={{
-                  flex: 1,
-                  flexDirection: "column",
-                  justifyContent: "space-between",
-                }}
-              >
-                <div>የብድር መረጃ</div>
-                <div>የብድር መረጃ</div>
-              </Accordion.Header>
+              <Accordion.Header>የብድር መረጃ</Accordion.Header>
               <Accordion.Body>
                 <CustomerLoanView loan={loan} />
               </Accordion.Body>
             </Accordion.Item>
             <Accordion.Item eventKey="4">
               <Accordion.Header
-                style={{ display: "flex", justifyContent: "space-between", alignContent:"space-between", alignItems:"space-between" }}
+                style={loan.collateralcar?.length > 0 ? availableCss : nullCss}
               >
-                <div>መያዣ</div>
-                <div>
-                  <a href={`/collaterals/${loanId}`}>Edit</a>
-                </div>
+                የመኪና መያዣ
               </Accordion.Header>
               <Accordion.Body>
                 <CollateralCarView collateralcar={loan.collateralcar} />
+              </Accordion.Body>
+            </Accordion.Item>
+            <Accordion.Item eventKey="5">
+              <Accordion.Header>የቤት መያዣ</Accordion.Header>
+              <Accordion.Body>
+                <CollateralHomeView collateralhome={loan.collateralhome} />
               </Accordion.Body>
             </Accordion.Item>
           </Accordion>
@@ -255,4 +259,4 @@ function LoanOnOfficer() {
   );
 }
 
-export default LoanOnOfficer;
+export default LoanOnAuditor;
