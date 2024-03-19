@@ -1,9 +1,7 @@
 import React from 'react';
 import { Text, Font, View, Image, StyleSheet } from '@react-pdf/renderer';
-import AmharicFont from './font/ebrima.ttf';
-import AmigosLogo from './Images/new.PNG';
-// import ReportImg from '../../common/Images/Capturet.PNG';
-
+import AmigosLogo from '../Images/new.PNG';
+import AmharicFont from "../font/ebrima.ttf"
 
 const styles = StyleSheet.create({
   container: {
@@ -30,7 +28,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   name: {
-    fontSize: 15,
+    fontSize: 12,
     fontFamily: 'AmharicFont',
     flexDirection: 'column',
     justifyContent: 'center',
@@ -55,7 +53,7 @@ Font.register({
   src: AmharicFont,
 });
 
-function Header() {
+function RequestFormHeader() {
   return (
     <View style={styles.container}>
       <View style={styles.detailColumn}>
@@ -69,4 +67,4 @@ function Header() {
   );
 }
 
-export default Header;
+export default RequestFormHeader

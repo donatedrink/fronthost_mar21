@@ -1,7 +1,7 @@
 import { Text, View } from "@react-pdf/renderer";
 import React from "react";
 
-const BottomTableReusableDynamic = (props) => {
+function BtDynamic(props) {
   return (
     <View
       style={{
@@ -16,6 +16,6 @@ const BottomTableReusableDynamic = (props) => {
       <Text>{props.text}</Text>
     </View>
   );
-};
+}
 
-export default BottomTableReusableDynamic;
+export default BtDynamic;

@@ -28,6 +28,9 @@ function CustomerProfileEdit() {
 
   const [isMarried, setisMarried] = useState();
 
+  const [address, setaddress] = useState("");
+  const [amAddress, setamAddress] = useState("");
+
   useEffect(() => {
     getCustomer();
     console.log("userId start");
@@ -41,8 +44,8 @@ function CustomerProfileEdit() {
         // entityExternalId: "",
         // activationDate: "",
         // active: "",
-        // displayName: "",
-        // amDisplayName: "",
+        displayName: firstname + " " + middlename + " " + lastname,
+        amDisplayName: amFirstname + " " + amMiddlename + " " + amLastname,
         firstname: firstname,
         amFirstname: amFirstname,
         middlename: middlename,
@@ -51,8 +54,8 @@ function CustomerProfileEdit() {
         amLastname: amLastname,
         // gender: "",
         // mobileNo: "",
-        // address: "",
-        // amAddress: "",
+        address: address,
+        amAddress: amAddress,
         subcity: subcity,
         amSubcity: amSubcity,
         woreda: woreda,
@@ -63,12 +66,11 @@ function CustomerProfileEdit() {
       })
       .then((res) => {
         console.log(res.data);
-        toast.success("successfully updated")
+        toast.success("successfully updated");
       })
       .catch((err) => {
         console.log(err);
-        toast.error("update unsuccessful")
-
+        toast.error("update unsuccessful");
       });
   };
 
@@ -94,6 +96,8 @@ function CustomerProfileEdit() {
         sethouseNum(res.data.houseNum);
 
         setisMarried(res.data.isMarried);
+        setaddress(res.data.address);
+        setamAddress(res.data.amAddress);
       })
       .catch((err) => {
         console.log(err);
@@ -102,7 +106,7 @@ function CustomerProfileEdit() {
 
   return (
     <div className="container">
-      <ToastContainer/>
+      <ToastContainer />
       <Card>
         <CardHeader>LPS</CardHeader>
         <CardBody>
@@ -134,6 +138,15 @@ function CustomerProfileEdit() {
                 class="form-control"
                 value={amLastname}
                 onChange={(e) => setamLastname(e.target.value)}
+              />
+              <label for="basic-url" class="form-label">
+                አድራሻ
+              </label>
+              <input
+                type="text"
+                class="form-control"
+                value={amAddress}
+                onChange={(e) => setamAddress(e.target.value)}
               />
               <label for="basic-url" class="form-label">
                 ክፍለ ከተማ
@@ -193,6 +206,15 @@ function CustomerProfileEdit() {
                 onChange={(e) => setlastname(e.target.value)}
               />
               <label for="basic-url" class="form-label">
+                Address
+              </label>
+              <input
+                type="text"
+                class="form-control"
+                value={address}
+                onChange={(e) => setaddress(e.target.value)}
+              />
+              <label for="basic-url" class="form-label">
                 Sub city
               </label>
               <input
@@ -201,6 +223,7 @@ function CustomerProfileEdit() {
                 value={subcity}
                 onChange={(e) => setsubcity(e.target.value)}
               />
+
               <label for="basic-url" class="form-label">
                 Woreda
               </label>

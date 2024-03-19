@@ -1,6 +1,6 @@
 import { StyleSheet } from '@react-pdf/renderer';
 
-const ReportStyles = StyleSheet.create({
+const CoverStyles = StyleSheet.create({
   fullfreebox: {
     display:'flex',
     justifyContent: 'flex-start',
@@ -133,4 +133,4 @@ const ReportStyles = StyleSheet.create({
 });
 
 
-export default ReportStyles;
+export default CoverStyles
