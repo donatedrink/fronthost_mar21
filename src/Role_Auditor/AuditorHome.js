@@ -5,8 +5,10 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { FaPencilAlt, FaPlus } from 'react-icons/fa';
 import LoanStatus from '../Common/LoanStatus';
+import { useSelector } from "react-redux";
 
 function AuditorHome() {
+  const { langName, serverIP, loadingFinished } = useSelector((store) => store.allsettings);
   const [loans, setLoans] = useState([]);
   const [filteredLoans, setFilteredLoans] = useState([]);
 
@@ -16,7 +18,7 @@ function AuditorHome() {
 
   const getlpscustomers = () => {
     axios
-      .get(`http://localhost:8000/loan/loans/`)
+      .get(`${serverIP}loan/loans/`)
       .then(function (response) {
         console.log(response.data);
         setLoans(response.data);

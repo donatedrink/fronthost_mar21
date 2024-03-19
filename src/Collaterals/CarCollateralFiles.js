@@ -5,8 +5,11 @@ import axios from "axios";
 import CarFiles from "./Car/CarFiles";
 import CarMarketValue from "./Car/CarMarketValue";
 import CarGarageReport from "./Car/CarGarageReport";
+import { useDispatch, useSelector } from 'react-redux';
+
 
 function CarCollateralFiles() {
+  const { langName, serverIP, loadingFinished } = useSelector((store) => store.allsettings);
   const { collateralId } = useParams();
   const [collateralDetail, setCollateralDetail] = useState([]);
 
@@ -16,7 +19,7 @@ function CarCollateralFiles() {
 
   const getCollateralDetail = () => {
     axios
-      .get(`http://localhost:8000/collateral_car/collateralcar/${collateralId}`)
+      .get(`${serverIP}collateral_car/collateralcar/${collateralId}`)
       .then((res) => {
         console.log(res.data);
         setCollateralDetail(res.data);

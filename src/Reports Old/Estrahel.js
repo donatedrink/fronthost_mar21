@@ -7,7 +7,7 @@ function Estrahel() {
   const [user, setUser] = useState([]);
   useEffect(() => {
     axios
-      .get(`http://localhost:8000/customer/customer`)
+      .get(`${serverIP}customer/customer`)
       .then((res) => {
         console.log(res.data);
         setUser(res.data);

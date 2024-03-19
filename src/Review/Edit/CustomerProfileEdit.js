@@ -24,7 +24,7 @@ function CustomerProfileEdit() {
 
   const getCustomer = () => {
     axios
-      .get(`http://localhost:8000/customer/customer/${customerId}`)
+      .get(`${serverIP}customer/customer/${customerId}`)
       .then((res) => {
         console.log('customer');
         console.log(res.data);

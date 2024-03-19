@@ -35,7 +35,7 @@ function CustomerLoanEdit(props) {
 
   const getLoan = () => {
     axios
-      .get(`http://localhost:8000/loan/loans/${loanId}`)
+      .get(`${serverIP}loan/loans/${loanId}`)
       .then((res) => {
         console.log('Loan res.data');
         console.log(res.data);
@@ -90,7 +90,7 @@ function CustomerLoanEdit(props) {
 
   const getCustomer = () => {
     axios
-      .get(`http://localhost:8000/customer/customers/${customerId}`)
+      .get(`${serverIP}customer/customers/${customerId}`)
       .then((res) => {
         console.log('customer');
         console.log(res.data);

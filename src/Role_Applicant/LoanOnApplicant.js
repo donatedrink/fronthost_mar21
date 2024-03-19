@@ -17,6 +17,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { FaTelegram } from "react-icons/fa";
 
 function LoanOnApplicant() {
+  const { langName, serverIP, loadingFinished } = useSelector((store) => store.allsettings);
   const { data } = useSelector((store) => store.customer);
   const { customerId, loanId } = useParams();
   const [customer, setCustomer] = useState([]);
@@ -32,7 +33,7 @@ function LoanOnApplicant() {
 
   const getCustomer = () => {
     axios
-      .get(`http://localhost:8000/customer/customers/${customerId}`)
+      .get(`${serverIP}customer/customers/${customerId}`)
       .then((res) => {
         console.log("customer");
         console.log(res.data);
@@ -45,7 +46,7 @@ function LoanOnApplicant() {
 
   const getLoan = () => {
     axios
-      .get(`http://localhost:8000/loan/loans/${loanId}`)
+      .get(`${serverIP}loan/loans/${loanId}`)
       .then((res) => {
         console.log(res.data);
         setLoan(res.data);
@@ -57,7 +58,7 @@ function LoanOnApplicant() {
 
   const sendToOfficer = () => {
     axios
-      .patch(`http://localhost:8000/loan/loans/${loanId}/`, {
+      .patch(`${serverIP}loan/loans/${loanId}/`, {
         // toho: true,
         to_o: true,
       })

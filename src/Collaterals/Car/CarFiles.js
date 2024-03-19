@@ -10,8 +10,11 @@ import ProgressBar from "react-bootstrap/ProgressBar";
 
 import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
+import { useDispatch, useSelector } from 'react-redux';
+
 
 function CarFiles(props) {
+  const { langName, serverIP, loadingFinished } = useSelector((store) => store.allsettings);
   const [checkListId, setCheckListId] = useState(1);
   const [chklst, setChklst] = useState([]);
   const [chklstUploaded, setChklstUploaded] = useState([]);
@@ -44,7 +47,7 @@ function CarFiles(props) {
   const getCollateralDetail = () => {
     axios
       .get(
-        `http://localhost:8000/collateral_car/collateralcar/${props.collateralId}`
+        `${serverIP}collateral_car/collateralcar/${props.collateralId}`
       )
       .then((res) => {
         console.log(res.data);
@@ -57,7 +60,7 @@ function CarFiles(props) {
 
   const getCarCollateralCheckList = () => {
     axios
-      .get(`http://localhost:8000/checklist/checklistbyparent/6`)
+      .get(`${serverIP}checklist/checklistbyparent/6`)
       .then((res) => {
         console.log(res.data);
         setChklst(res.data);
@@ -71,7 +74,7 @@ function CarFiles(props) {
   const getAllFiles = () => {
     axios
       .get(
-        `http://localhost:8000/collateral_car/collateralcar/${props.collateralId}`
+        `${serverIP}collateral_car/collateralcar/${props.collateralId}`
       )
       .then((res) => {
         console.log(res.data);
@@ -105,7 +108,7 @@ function CarFiles(props) {
     });
 
     axios
-      .post("http://localhost:8000/car_commonfiles/carfiles", fd, {
+      .post("${serverIP}car_commonfiles/carfiles", fd, {
         onUploadProgress: (progressEvent) => {
           setProgress((prevState) => {
             return { ...prevState, pc: progressEvent.progress * 100 };

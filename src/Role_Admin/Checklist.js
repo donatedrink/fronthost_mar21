@@ -6,8 +6,10 @@ import { useParams } from 'react-router-dom';
 
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
+import { useSelector } from "react-redux";
 
 function Checklist() {
+  const { langName, serverIP, loadingFinished } = useSelector((store) => store.allsettings);
   const { chktypeid } = useParams();
   const [chklist, setChklist] = useState([]);
   const [chklistType, setChklistType] = useState([]);
@@ -27,7 +29,7 @@ function Checklist() {
 
   const getChecklist = () => {
     axios
-      .get(`http://localhost:8000/checklist/checklists`)
+      .get(`${serverIP}checklist/checklists`)
       .then(function (response) {
         console.log(response);
         setChklist(response.data.filter((x) => x.parent == chktypeid));
@@ -39,7 +41,7 @@ function Checklist() {
 
   const getChecklistType = () => {
     axios
-      .get(`http://localhost:8000/checklist_type/checklisttypes/${chktypeid}`)
+      .get(`${serverIP}checklist_type/checklisttypes/${chktypeid}`)
       .then(function (response) {
         console.log(response);
         setChklistType(response.data);
@@ -51,7 +53,7 @@ function Checklist() {
 
   const saveCheckList = () => {
     axios
-      .post(`http://localhost:8000/checklist/checklists/`, {
+      .post(`${serverIP}checklist/checklists/`, {
         enName: name,
         amName: amName,
         isMandatory: true,
@@ -68,7 +70,7 @@ function Checklist() {
   };
   const editCheckList = () => {
     axios
-      .patch(`http://localhost:8000/checklist/checklists/${targetObj.id}/`, {
+      .patch(`${serverIP}checklist/checklists/${targetObj.id}/`, {
         enName: name,
         amName: amName
       })
@@ -83,7 +85,7 @@ function Checklist() {
   };
   const deleteCheckList = () => {
     axios
-      .delete(`http://localhost:8000/checklist/checklists/${targetObj.id}`)
+      .delete(`${serverIP}checklist/checklists/${targetObj.id}`)
       .then((res) => {
         console.log(res.data);
         getChecklist();

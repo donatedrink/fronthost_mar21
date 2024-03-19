@@ -9,8 +9,11 @@ import { Card, CardHeader, CardBody, CardFooter } from "react-bootstrap";
 import ProgressBar from "react-bootstrap/ProgressBar";
 import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
+import { useDispatch, useSelector } from 'react-redux';
 
 function CarMarketValue(props) {
+  const { langName, serverIP, loadingFinished } = useSelector((store) => store.allsettings);
+
   const [marketValue, setMarketValue] = useState(0);
 
   const [show, setShow] = useState(false);
@@ -35,7 +38,7 @@ function CarMarketValue(props) {
   const getAllFiles = () => {
     axios
       .get(
-        `http://localhost:8000/collateral_car/collateralcar/${props.collateralId}`
+        `${serverIP}collateral_car/collateralcar/${props.collateralId}`
       )
       .then((res) => {
         console.log(res.data);
@@ -66,7 +69,7 @@ function CarMarketValue(props) {
     });
 
     axios
-      .post(`http://localhost:8000/car_marketvalue/carmarketvalues/`, fd, {
+      .post(`${serverIP}car_marketvalue/carmarketvalues/`, fd, {
         onUploadProgress: (progressEvent) => {
           setProgress((prevState) => {
             return { ...prevState, pc: progressEvent.progress * 100 };
@@ -108,7 +111,7 @@ function CarMarketValue(props) {
     });
 
     axios
-      .patch(`http://localhost:8000/car_marketvalue/carmarketvalues/${targetMarketValue.id}/`, fd, {
+      .patch(`${serverIP}car_marketvalue/carmarketvalues/${targetMarketValue.id}/`, fd, {
         onUploadProgress: (progressEvent) => {
           setProgress((prevState) => {
             return { ...prevState, pc: progressEvent.progress * 100 };
@@ -135,7 +138,7 @@ function CarMarketValue(props) {
   const handleDelete = () => {
     axios
       .delete(
-        `http://localhost:8000/car_marketvalue/carmarketvalues/${targetMarketValue.id}`
+        `${serverIP}car_marketvalue/carmarketvalues/${targetMarketValue.id}`
       )
       .then((res) => {
         console.log(res.data);

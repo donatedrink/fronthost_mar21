@@ -48,7 +48,7 @@ function DocCover() {
 
   const getCustomer = () => {
     axios
-      .get(`http://localhost:8000/customer/customer/${customerId}`)
+      .get(`${serverIP}customer/customer/${customerId}`)
       .then((res) => {
         console.log(res.data);
         setCustomer(res.data);
@@ -60,7 +60,7 @@ function DocCover() {
 
   const getLoan = () => {
     axios
-      .get(`http://localhost:8000/loan/loans/${loanId}`)
+      .get(`${serverIP}loan/loans/${loanId}`)
       .then((res) => {
         console.log(res.data);
         setLoan(res.data);

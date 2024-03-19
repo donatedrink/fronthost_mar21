@@ -34,7 +34,7 @@ function LoanOnOfficer() {
 
   const getCustomer = () => {
     axios
-      .get(`http://localhost:8000/customer/customers/${customerId}`)
+      .get(`${serverIP}customer/customers/${customerId}`)
       .then((res) => {
         console.log("customer");
         console.log(res.data);
@@ -47,7 +47,7 @@ function LoanOnOfficer() {
 
   const getLoan = () => {
     axios
-      .get(`http://localhost:8000/loan/loans/${loanId}`)
+      .get(`${serverIP}loan/loans/${loanId}`)
       .then((res) => {
         console.log(res.data);
         setLoan(res.data);
@@ -60,7 +60,7 @@ function LoanOnOfficer() {
   const rejectWithComment = () => {
     console.log("rejectWithComment");
     axios
-      .post(`http://localhost:8000/loan_comment/loancomments/`, {
+      .post(`${serverIP}loan_comment/loancomments/`, {
         comment: commentText,
         loan: loanId,
         commentedBy: data.id,
@@ -78,7 +78,7 @@ function LoanOnOfficer() {
 
   const sendToHeadOfficer = () => {
     axios
-      .patch(`http://localhost:8000/loan/loans/${loanId}/`, {
+      .patch(`${serverIP}loan/loans/${loanId}/`, {
         toho: true,
       })
       .then((res) => {

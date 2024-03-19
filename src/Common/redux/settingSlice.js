@@ -5,7 +5,6 @@ const initialState = {
   serverIP: 'http://localhost:8000/',
   currLink: '',
   langName: 'am',
-
 };
 
 const settingSlice = createSlice({

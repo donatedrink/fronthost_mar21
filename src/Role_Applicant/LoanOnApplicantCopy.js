@@ -15,7 +15,7 @@ function LoanOnApplicant() {
 
   const getCustomer = () => {
     axios
-      .get(`http://localhost:8000/customer/customers/${customerId}`)
+      .get(`${serverIP}customer/customers/${customerId}`)
       .then((res) => {
         console.log(res.data);
         setCustomer(res.data);
@@ -27,7 +27,7 @@ function LoanOnApplicant() {
 
   const getLoan = () => {
     axios
-      .get(`http://localhost:8000/loan/loans/${loanId}`)
+      .get(`${serverIP}loan/loans/${loanId}`)
       .then((res) => {
         console.log(res.data);
         setLoan(res.data);

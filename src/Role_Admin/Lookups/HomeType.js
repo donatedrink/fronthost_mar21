@@ -5,8 +5,10 @@ import { FaPencilAlt, FaTrashAlt } from "react-icons/fa";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
+import { useSelector } from "react-redux";
 
 function HomeType() {
+  const { langName, serverIP, loadingFinished } = useSelector((store) => store.allsettings);
   const [homeType, setHomeType] = useState([]);
   const [modalAdd, setModalAdd] = useState(false);
   const [modalEdit, setModalEdit] = useState(false);
@@ -24,7 +26,7 @@ function HomeType() {
 
   const getHomeTypes = () => {
     axios
-      .get(`http://localhost:8000/home_type/hometypes`)
+      .get(`${serverIP}home_type/hometypes`)
       .then(function (response) {
         setHomeType(response.data);
       })
@@ -35,7 +37,7 @@ function HomeType() {
 
   const saveHomeType = () => {
     axios
-      .post(`http://localhost:8000/home_type/hometypes/`, {
+      .post(`${serverIP}home_type/hometypes/`, {
         enName: enName,
         amName: amName,
         pricepercaremeter: price,
@@ -50,7 +52,7 @@ function HomeType() {
   };
   const updateHomeType = () => {
     axios
-      .patch(`http://localhost:8000/home_type/hometypes/${targetObj.id}`, {
+      .patch(`${serverIP}home_type/hometypes/${targetObj.id}`, {
         enName: enName,
         amName: amName,
         pricepercaremeter: price,
@@ -65,7 +67,7 @@ function HomeType() {
   };
   const deleteHomeType = () => {
     axios
-      .delete(`http://localhost:8000/home_type/hometypes/${targetObj.id}`)
+      .delete(`${serverIP}home_type/hometypes/${targetObj.id}`)
       .then(function (response) {
         setModalDelete(false);
         getHomeTypes();

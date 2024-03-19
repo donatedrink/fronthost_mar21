@@ -27,7 +27,7 @@ function CollateralCarMarketValueEdit() {
 
   const getCarMarketValues = () => {
     axios
-      .get(`http://localhost:8000/car_marketvalue/carmarketvalues/`)
+      .get(`${serverIP}car_marketvalue/carmarketvalues/`)
       .then((res) => {
         console.log(res.data);
         setMarketValues(res.data);
@@ -61,7 +61,7 @@ function CollateralCarMarketValueEdit() {
     });
 
     axios
-      .post('http://localhost:8000/car_marketvalue/carmarketvalues/', fd, {
+      .post('${serverIP}car_marketvalue/carmarketvalues/', fd, {
         onUploadProgress: (progressEvent) => {
           setProgress((prevState) => {
             return { ...prevState, pc: progressEvent.progress * 100 };

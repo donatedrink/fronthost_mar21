@@ -6,6 +6,7 @@ import { Alert, Card } from "react-bootstrap";
 import { FaCarAlt, FaHome, FaTrashAlt, FaUserAlt } from 'react-icons/fa';
 
 function Review() {
+  const { langName, serverIP, loadingFinished } = useSelector((store) => store.allsettings);
   const { data } = useSelector((store) => store.customer);
   const { customerId, loanId } = useParams();
   const [customer, setCustomer] = useState([]);
@@ -18,7 +19,7 @@ function Review() {
 
   const getCustomer = () => {
     axios
-      .get(`http://localhost:8000/customer/customers/${customerId}`)
+      .get(`${serverIP}customer/customers/${customerId}`)
       .then((res) => {
         console.log("customer");
         console.log(res.data);
@@ -31,7 +32,7 @@ function Review() {
 
   const getLoan = () => {
     axios
-      .get(`http://localhost:8000/loan/loans/${loanId}`)
+      .get(`${serverIP}loan/loans/${loanId}`)
       .then((res) => {
         console.log(res.data);
         setLoan(res.data);

@@ -1,8 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Badge, ListGroup } from "react-bootstrap";
+import { useSelector } from "react-redux";
 
 function AdminHome() {
+  const { langName, serverIP, loadingFinished } = useSelector((store) => store.allsettings);
   const [allCheckListTypes, setAllCheckListTypes] = useState([]);
   const [carManufactures, setCarManufactures] = useState([]);
   const [carModels, setCarModels] = useState([]);
@@ -17,7 +19,7 @@ function AdminHome() {
 
   const carManufactureYear = () => {
     axios
-      .get(`http://localhost:8000/car_manufacturer/carmanufacture`)
+      .get(`${serverIP}car_manufacturer/carmanufacture`)
       .then((res) => {
         console.log(res.data);
         setCarManufactures(res.data);
@@ -29,7 +31,7 @@ function AdminHome() {
 
   const carModel = () => {
     axios
-      .get(`http://localhost:8000/car_model/cars`)
+      .get(`${serverIP}car_model/cars`)
       .then((res) => {
         console.log(res.data);
         setCarModels(res.data);
@@ -41,7 +43,7 @@ function AdminHome() {
 
   const homeType = () => {
     axios
-      .get(`http://localhost:8000/home_type/hometypes`)
+      .get(`${serverIP}home_type/hometypes`)
       .then((res) => {
         console.log(res.data);
         setHomeTypes(res.data);
@@ -53,7 +55,7 @@ function AdminHome() {
 
   const allChecklistTypes = () => {
     axios
-      .get(`http://localhost:8000/checklist_type/checklisttypes`)
+      .get(`${serverIP}checklist_type/checklisttypes`)
       .then((res) => {
         console.log(res.data);
         setAllCheckListTypes(res.data);

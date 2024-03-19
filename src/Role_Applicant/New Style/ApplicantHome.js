@@ -19,7 +19,7 @@ function ApplicantHome() {
   const getClientByExternalId = () => {
     axios
       .get(
-        `http://localhost:8000/fineract/clientbyexternalid?entityExternalId=${Number(
+        `${serverIP}fineract/clientbyexternalid?entityExternalId=${Number(
           externalId
         )}`
       )
@@ -36,7 +36,7 @@ function ApplicantHome() {
   const checkLoanPlan = (entityAccountNo) => {
     axios
       .get(
-        `http://localhost:8000/fineract/allsaving?entityAccountNo=${entityAccountNo}`
+        `${serverIP}fineract/allsaving?entityAccountNo=${entityAccountNo}`
       )
       .then((res) => {
         console.log("loan plan exisit");
@@ -58,7 +58,7 @@ function ApplicantHome() {
 
   const searchUserOn_Django = () => {
     axios
-      .get(`http://localhost:8000/customer/clientbyexternalid/${externalId}`)
+      .get(`${serverIP}customer/clientbyexternalid/${externalId}`)
       .then((res) => {
         console.log("customer in django");
         console.log(res.data);

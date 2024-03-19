@@ -8,8 +8,10 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import { FaCarAlt, FaPencilAlt, FaTrashAlt } from "react-icons/fa";
 import { Badge } from "react-bootstrap";
+import { useDispatch, useSelector } from 'react-redux';
 
 function CarCollateral(props) {
+  const { langName, serverIP, loadingFinished } = useSelector((store) => store.allsettings);
   const [loan, setLoan] = useState([]);
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
@@ -30,7 +32,7 @@ function CarCollateral(props) {
 
   const getCarCollaterals = () => {
     axios
-      .get(`http://localhost:8000/loan/loans/${props.loanId}`)
+      .get(`${serverIP}loan/loans/${props.loanId}`)
       .then((res) => {
         console.log("the");
         console.log(res.data);
@@ -43,7 +45,7 @@ function CarCollateral(props) {
 
   const getCarModels = () => {
     axios
-      .get(`http://localhost:8000/car_model/cars`)
+      .get(`${serverIP}car_model/cars`)
       .then((res) => {
         console.log(res.data);
         setCarModels(res.data);
@@ -55,7 +57,7 @@ function CarCollateral(props) {
 
   const getCarManufactureYears = () => {
     axios
-      .get(`http://localhost:8000/car_manufacturer/carmanufacture`)
+      .get(`${serverIP}car_manufacturer/carmanufacture`)
       .then((res) => {
         console.log(res.data);
         setCarManufactureYear(res.data);
@@ -68,7 +70,7 @@ function CarCollateral(props) {
   const saveCarCollateral = (values, actions) => {
     console.log(values);
     axios
-      .post(`http://localhost:8000/collateral_car/collateralcar/`, {
+      .post(`${serverIP}collateral_car/collateralcar/`, {
         manufacturedYear: values.manufacturedYear,
         chassisNumber: values.chassisNumber,
         engineNumber: values.engineNumber,
@@ -100,7 +102,7 @@ function CarCollateral(props) {
   const deleteCar = () => {
     axios
       .delete(
-        `http://localhost:8000/collateral_car/collateralcar/${targetCar.id}`
+        `${serverIP}collateral_car/collateralcar/${targetCar.id}`
       )
       .then((res) => {
         console.log(res.data);

@@ -8,8 +8,11 @@ import { Card, CardBody, CardFooter } from "react-bootstrap";
 import ProgressBar from "react-bootstrap/ProgressBar";
 import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
+import { useDispatch, useSelector } from 'react-redux';
+
 
 function CarGarageReport(props) {
+  const { langName, serverIP, loadingFinished } = useSelector((store) => store.allsettings);
   const [garageValue, setGarageValue] = useState(0);
   const [show, setShow] = useState(false);
   const [editModal, setEditModal] = useState(false);
@@ -33,7 +36,7 @@ function CarGarageReport(props) {
   const getAllFiles = () => {
     axios
       .get(
-        `http://localhost:8000/collateral_car/collateralcar/${props.collateralId}`
+        `${serverIP}collateral_car/collateralcar/${props.collateralId}`
       )
       .then((res) => {
         console.log(res.data);
@@ -64,7 +67,7 @@ function CarGarageReport(props) {
     });
 
     axios
-      .post(`http://localhost:8000/car_garagevalue/garagereports/`, fd, {
+      .post(`${serverIP}car_garagevalue/garagereports/`, fd, {
         onUploadProgress: (progressEvent) => {
           setProgress((prevState) => {
             return { ...prevState, pc: progressEvent.progress * 100 };
@@ -107,7 +110,7 @@ function CarGarageReport(props) {
 
     axios
       .put(
-        `http://localhost:8000/car_garagevalue/garagereports/${targetGarageValue.id}/`,
+        `${serverIP}car_garagevalue/garagereports/${targetGarageValue.id}/`,
         fd,
         {
           onUploadProgress: (progressEvent) => {
@@ -137,7 +140,7 @@ function CarGarageReport(props) {
   const handleDelete = () => {
     axios
       .delete(
-        `http://localhost:8000/car_garagevalue/garagereports/${targetGarageValue.id}`
+        `${serverIP}car_garagevalue/garagereports/${targetGarageValue.id}`
       )
       .then((res) => {
         console.log(res.data);

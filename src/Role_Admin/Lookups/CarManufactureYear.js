@@ -6,8 +6,11 @@ import { FaPencilAlt, FaTrashAlt } from "react-icons/fa";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
+import { useSelector } from "react-redux";
+
 
 function CarManufactureYear() {
+  const { langName, serverIP, loadingFinished } = useSelector((store) => store.allsettings);
   const [myear, setMyear] = useState([]);
   const [modalAdd, setModalAdd] = useState(false);
   const [modalEdit, setModalEdit] = useState(false);
@@ -23,7 +26,7 @@ function CarManufactureYear() {
 
   const getManufactureYear = () => {
     axios
-      .get(`http://localhost:8000/car_manufacturer/carmanufacture`)
+      .get(`${serverIP}car_manufacturer/carmanufacture`)
       .then(function (response) {
         console.log(response);
         setMyear(response.data);
@@ -37,7 +40,7 @@ function CarManufactureYear() {
     console.log("save");
     setModalAdd(false);
     axios
-      .post(`http://localhost:8000/car_manufacturer/carmanufacture`, {
+      .post(`${serverIP}car_manufacturer/carmanufacture`, {
         yearRange: range,
         multiplierRatio: percent,
       })
@@ -58,7 +61,7 @@ function CarManufactureYear() {
   const deleteManufactureYear = () => {
     axios
       .delete(
-        `http://localhost:8000/car_manufacturer/carmanufacture/${targetRecord.id}`
+        `${serverIP}car_manufacturer/carmanufacture/${targetRecord.id}`
       )
       .then((res) => {
         console.log(res.data);

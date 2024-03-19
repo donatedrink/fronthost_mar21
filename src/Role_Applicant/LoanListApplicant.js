@@ -5,8 +5,10 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import { FaPencilAlt, FaPlus } from "react-icons/fa";
 import LoanStatus from "../Common/LoanStatus";
+import { useSelector } from "react-redux";
 
 function LoanListApplicant() {
+  const { langName, serverIP, loadingFinished } = useSelector((store) => store.allsettings);
   const [loans, setLoans] = useState([]);
   const [filteredLoans, setFilteredLoans] = useState([]);
   const [officers, setOfficers] = useState([]);
@@ -24,7 +26,7 @@ function LoanListApplicant() {
 
   const setAllOfficers = () => {
     axios
-      .get(`http://localhost:8000/lpsauth/officers`)
+      .get(`${serverIP}lpsauth/officers`)
       .then(function (response) {
         console.log(response.data);
         setOfficers(response.data);
@@ -36,7 +38,7 @@ function LoanListApplicant() {
 
   const getlpscustomers = () => {
     axios
-      .get(`http://localhost:8000/loan/loans`)
+      .get(`${serverIP}loan/loans`)
       .then(function (response) {
         console.log(response.data);
         setLoans(response.data);
@@ -51,7 +53,7 @@ function LoanListApplicant() {
     console.log("loanId =  " + loanId);
     console.log("officerId =  " + officerId);
     axios
-      .patch(`http://localhost:8000/loan/loans/${loanId}`, {
+      .patch(`${serverIP}loan/loans/${loanId}`, {
         assignedTo: officerId,
       })
       .then(function (response) {

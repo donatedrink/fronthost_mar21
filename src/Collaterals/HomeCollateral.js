@@ -8,8 +8,10 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import { FaHome, FaPencilAlt, FaTrashAlt } from "react-icons/fa";
 import { Badge } from "react-bootstrap";
+import { useSelector } from "react-redux";
 
 function HomeCollateral(props) {
+  const { langName, serverIP, loadingFinished } = useSelector((store) => store.allsettings);
   const [loan, setLoan] = useState([]);
   const [homeTypes, setHomeTypes] = useState([]);
   const [showAddModal, setShowAddModal] = useState(false);
@@ -27,7 +29,7 @@ function HomeCollateral(props) {
 
   const getCurrentLoan = () => {
     axios
-      .get(`http://localhost:8000/loan/loans/${props.loanId}`)
+      .get(`${serverIP}loan/loans/${props.loanId}`)
       .then((res) => {
         console.log("Loan");
         console.log(res.data);
@@ -40,7 +42,7 @@ function HomeCollateral(props) {
 
   const getHomeTypes = () => {
     axios
-      .get(`http://localhost:8000/home_type/hometypes`)
+      .get(`${serverIP}home_type/hometypes`)
       .then((res) => {
         console.log("Home Types");
         console.log(res.data);
@@ -54,7 +56,7 @@ function HomeCollateral(props) {
   const saveCollateralHome = (values) => {
     console.log(values);
     axios
-      .post(`http://localhost:8000/collateral_home/collateralhomes/`, {
+      .post(`${serverIP}collateral_home/collateralhomes/`, {
         enName: values.enName,
         amName: values.amName,
         homearea: values.homeArea,
@@ -74,7 +76,7 @@ function HomeCollateral(props) {
   const editHome = (values) => {
     console.log(values);
 
-    // axios.delete(`http://localhost:8000/collateral_home/collateralhomes/${targetHome.id}`).then((res)=>{
+    // axios.delete(`${serverIP}collateral_home/collateralhomes/${targetHome.id}`).then((res)=>{
     //   console.log(res.data)
     //   setShowEditModal(false);
     // }).catch((err)=>{
@@ -84,7 +86,7 @@ function HomeCollateral(props) {
   const deleteHome = () => {
     axios
       .delete(
-        `http://localhost:8000/collateral_home/collateralhomes/${targetHome.id}`
+        `${serverIP}collateral_home/collateralhomes/${targetHome.id}`
       )
       .then((res) => {
         console.log(res.data);

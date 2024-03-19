@@ -6,8 +6,12 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import ListGroup from "react-bootstrap/ListGroup";
 import { ToastContainer, toast } from "react-toastify";
+import { useDispatch, useSelector } from 'react-redux';
+
 
 function ApplicantHome() {
+  const { langName, serverIP, loadingFinished } = useSelector((store) => store.allsettings);
+
   const [externalId, setExternalId] = useState(0);
   const [activeLoanPlan, setActiveLoanPlan] = useState({});
   const [djangoUser, setDjangoUser] = useState([]);
@@ -30,7 +34,7 @@ function ApplicantHome() {
   const getClientByExternalId = () => {
     axios
       .get(
-        `http://localhost:8000/fineract/clientbyexternalid?entityExternalId=${Number(
+        `${serverIP}fineract/clientbyexternalid?entityExternalId=${Number(
           externalId
         )}`
       )
@@ -49,7 +53,7 @@ function ApplicantHome() {
   const amisisUserDetail = (entityAccountNo) => {
     axios
       .get(
-        `http://localhost:8000/fineract/clientbyid?entityAccountNo=${entityAccountNo}`
+        `${serverIP}fineract/clientbyid?entityAccountNo=${entityAccountNo}`
       )
       .then((res) => {
         setAmisisUser(res.data);
@@ -63,7 +67,7 @@ function ApplicantHome() {
   const checkLoanPlan = (entityAccountNo) => {
     axios
       .get(
-        `http://localhost:8000/fineract/allsaving?entityAccountNo=${entityAccountNo}`
+        `${serverIP}fineract/allsaving?entityAccountNo=${entityAccountNo}`
       )
       .then((res) => {
         console.log("loan plan exisit");
@@ -97,7 +101,7 @@ function ApplicantHome() {
 
   const searchUserOn_Django = () => {
     axios
-      .get(`http://localhost:8000/customer/clientbyexternalid/${externalId}`)
+      .get(`${serverIP}customer/clientbyexternalid/${externalId}`)
       .then((res) => {
         console.log("customer in django");
         console.log(res.data);
@@ -110,7 +114,7 @@ function ApplicantHome() {
 
   const InitializeLoanPlan = () => {
     axios
-      .post(`http://localhost:8000/loan/loans/`, {
+      .post(`${serverIP}loan/loans/`, {
         loanId: activeLoanPlan.id,
         totalSaving: savingAccountTotal,
         totalShares: shareAccountTotal,
@@ -139,7 +143,7 @@ function ApplicantHome() {
   const getLoanPlanFromAmisisAndUpdateLpsLoanPlan = (activeLoanPlanId) => {
     axios
       .get(
-        `http://localhost:8000/fineract/clientloanplan?entityExternalId=${activeLoanPlanId}`
+        `${serverIP}fineract/clientloanplan?entityExternalId=${activeLoanPlanId}`
       )
       .then(function (response) {
         console.log("loan plan response.data");
@@ -153,7 +157,7 @@ function ApplicantHome() {
 
   const copyFineractUserToLocalDatabase = () => {
     axios
-      .post(`http://localhost:8000/customer/customers/`, {
+      .post(`${serverIP}customer/customers/`, {
         entityAccountNo: amisisUser.accountNo,
         entityExternalId: amisisUser.externalId,
         activationDate: "2024-01-17",

@@ -5,6 +5,8 @@ import { useSelector } from "react-redux";
 import LoanStatus from "../Common/LoanStatus";
 
 function OfficerHome() {
+  const { langName, serverIP, loadingFinished } = useSelector((store) => store.allsettings);
+
   const { data } = useSelector((store) => store.customer);
   const [loans, setLoans] = useState([]);
 
@@ -14,7 +16,7 @@ function OfficerHome() {
 
   const setAllLoans = () => {
     axios
-      .get(`http://localhost:8000/loan/loans`)
+      .get(`${serverIP}loan/loans`)
       .then(function (response) {
         console.log(response.data);
         setLoans(response.data);

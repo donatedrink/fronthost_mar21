@@ -39,7 +39,7 @@ function CustomerProfileEdit() {
   const updateCustomerRecord = () => {
     console.log("updateCustomerRecord");
     axios
-      .patch(`http://localhost:8000/customer/customers/${customerId}/`, {
+      .patch(`${serverIP}customer/customers/${customerId}/`, {
         // entityAccountNo: "",
         // entityExternalId: "",
         // activationDate: "",
@@ -76,7 +76,7 @@ function CustomerProfileEdit() {
 
   const getCustomer = () => {
     axios
-      .get(`http://localhost:8000/customer/customers/${customerId}/`)
+      .get(`${serverIP}customer/customers/${customerId}/`)
       .then((res) => {
         setCustomer(res.data);
         console.log(res.data);

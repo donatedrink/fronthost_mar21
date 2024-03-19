@@ -6,8 +6,10 @@ import { FaPencilAlt, FaTrashAlt } from 'react-icons/fa';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
+import { useSelector } from "react-redux";
 
 function CarModel() {
+  const { langName, serverIP, loadingFinished } = useSelector((store) => store.allsettings);
   const [carModel, setCarModel] = useState([]);
   const [modalAdd, setModalAdd] = useState(false);
   const [modalEdit, setModalEdit] = useState(false);
@@ -23,7 +25,7 @@ function CarModel() {
 
   const getCarModel = () => {
     axios
-      .get(`http://localhost:8000/car_model/cars`)
+      .get(`${serverIP}car_model/cars`)
       .then(function (response) {
         console.log(response.data);
         setCarModel(response.data);
@@ -37,7 +39,7 @@ function CarModel() {
     console.log('save');
     setModalAdd(false);
     axios
-      .post(`http://localhost:8000/car_model/cars`, {
+      .post(`${serverIP}car_model/cars`, {
         enName: enName
       })
       .then(function (response) {
@@ -51,7 +53,7 @@ function CarModel() {
 
   const editCarModel = () => {
     axios
-      .patch(`http://localhost:8000/car_model/cars/${targetObj.id}`, {
+      .patch(`${serverIP}car_model/cars/${targetObj.id}`, {
         enName: enName
       })
       .then(function (response) {
@@ -66,7 +68,7 @@ function CarModel() {
 
   const deleteCarModel = () => {
     axios
-      .delete(`http://localhost:8000/car_model/cars/${targetObj.id}`)
+      .delete(`${serverIP}car_model/cars/${targetObj.id}`)
       .then((res) => {
         console.log(res.data);
         setModalDelete(false);

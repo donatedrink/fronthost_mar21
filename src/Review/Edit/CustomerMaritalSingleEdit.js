@@ -38,7 +38,7 @@ function CustomerMaritalSingleEdit() {
 
   const getNotMarriedCheckList = () => {
     axios
-      .get(`http://localhost:8000/checklist/checklistbyparent/4`)
+      .get(`${serverIP}checklist/checklistbyparent/4`)
       .then((res) => {
         console.log(res.data);
         setChklst(res.data);
@@ -51,7 +51,7 @@ function CustomerMaritalSingleEdit() {
 
   const getUploadedFiles = () => {
     axios
-      .get(`http://localhost:8000/customer/customers/${customerId}`)
+      .get(`${serverIP}customer/customers/${customerId}`)
       .then((res) => {
         console.log('setChklstUploaded');
         console.log(res.data);
@@ -83,7 +83,7 @@ function CustomerMaritalSingleEdit() {
     });
 
     axios
-      .post('http://localhost:8000/customer_single/custommersingle/', fd, {
+      .post('${serverIP}customer_single/custommersingle/', fd, {
         onUploadProgress: (progressEvent) => {
           setProgress((prevState) => {
             return { ...prevState, pc: progressEvent.progress * 100 };

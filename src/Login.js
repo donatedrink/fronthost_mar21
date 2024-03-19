@@ -11,7 +11,6 @@ import Image from 'react-bootstrap/Image';
 import { clearUserDataDjango } from './Common/redux/settingSlice';
 import { useTranslation } from 'react-i18next';
 import { changeLang, resetSetting } from './Common/redux/settingSlice';
-
 // const solomon = require('multi_language_number_to_word')
 const calendar = require('ethiopian-to-gregorian');
 
