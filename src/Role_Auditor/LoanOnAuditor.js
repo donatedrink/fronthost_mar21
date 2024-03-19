@@ -7,23 +7,15 @@ import ListGroup from "react-bootstrap/ListGroup";
 import { useSelector } from "react-redux";
 import Accordion from "react-bootstrap/Accordion";
 
-// import CustomerLoanView from '../Officer/Views/CustomerLoanView';
-// import CustomerProfileView from '../Officer/Views/CustomerProfileView';
-// import CollateralHomeView from '../Officer/Views/CollateralHomeView';
-// import CollateralCarView from '../Officer/Views/CollateralCarView';
-
-// import CustomerSingleView from '../Officer/Views/CustomerSingleView';
-// import CustomerMarriedView from '../Officer/Views/CustomerMarriedView';
-
 import CustomerLoanView from "../Review/Views/CustomerLoanView";
 import CustomerProfileView from "../Review/Views/CustomerProfileView";
-import CollateralHomeView from "../Review/Views/CollateralHomeView";
-import CollateralCarView from "../Review/Views/CollateralCarView";
+import CollateralsView from "../Collaterals/CollateralsView";
 
 import CustomerSingleView from "../Review/Views/CustomerSingleView";
 import CustomerMarriedView from "../Review/Views/CustomerMarriedView";
 
 import { ToastContainer, toast } from "react-toastify";
+import { FaTelegram, FaThumbsUp } from "react-icons/fa";
 
 function LoanOnAuditor() {
   const { data } = useSelector((store) => store.customer);
@@ -42,7 +34,7 @@ function LoanOnAuditor() {
 
   const getCustomer = () => {
     axios
-      .get(`http://localhost:8000/customer/customer/${customerId}`)
+      .get(`http://localhost:8000/customer/customers/${customerId}`)
       .then((res) => {
         console.log("customer");
         console.log(res.data);
@@ -59,6 +51,23 @@ function LoanOnAuditor() {
       .then((res) => {
         console.log(res.data);
         setLoan(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const sendApprove = () => {
+    axios
+      .patch(`http://localhost:8000/loan/loans/${loanId}/`, {
+        auditorApproved: true,
+        // to_o: true,
+      })
+      .then((res) => {
+        console.log(res.data);
+        setModalApprove(false);
+        toast.success("Sucessfully Approved");
+        getLoan();
       })
       .catch((err) => {
         console.log(err);
@@ -84,40 +93,19 @@ function LoanOnAuditor() {
       });
   };
 
-  const approveLoan = () => {
-    axios
-      .patch(`http://localhost:8000/loan/loans/${loanId}/`, {
-        // decisionmakerApproved: true,
-        auditorApproved: true,
-      })
-      .then((res) => {
-        console.log(res.data);
-        setModalApprove(false);
-        toast.success("Sucessfully Approved");
-        getLoan();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  const availableCss = { backgroundColor: "red", color: "white" };
-  const nullCss = { backgroundColor: "red", color: "white" };
-
   return (
     <div className="container">
       {/* Modal Edit Start  */}
       <Modal show={modalApprove} onHide={() => setModalApprove(false)}>
         <Modal.Header closeButton>
-          <Modal.Title style={{ color: "orange" }}> Approve Loan </Modal.Title>
+          <Modal.Title variant="primary" >Approve Loan</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          Are you sure to approve{" "}
-          <strong> {loan.approvedPrincipal?.toLocaleString()} </strong> Loan
+          <FaThumbsUp /> Approve the loan
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="warning" onClick={() => approveLoan()}>
-            Approve
+          <Button variant="primary" onClick={() => sendApprove()}>
+            <FaThumbsUp color="white" />
           </Button>
         </Modal.Footer>
       </Modal>
@@ -137,7 +125,7 @@ function LoanOnAuditor() {
               <b>{customer.amDisplayName}</b>
             </div>
             <div>
-              <a href={`/review/${loanId}`}>REVIEW</a> &nbsp;
+              {/* <a href={`/review/${loanId}`}>REVIEW</a> &nbsp;*/}
               {loan.auditorApproved ? (
                 <>APPROVED</>
               ) : (
@@ -145,7 +133,7 @@ function LoanOnAuditor() {
                   onClick={() => setModalApprove(true)}
                   className="btn btn-sm"
                 >
-                  Approve
+                  <FaThumbsUp /> Approve
                 </Button>
               )}
             </div>
@@ -156,64 +144,78 @@ function LoanOnAuditor() {
         <div className="col-sm-8">
           <Accordion defaultActiveKey="1">
             <Accordion.Item eventKey="1">
-              <Accordion.Header>የተበዳሪ ሙሉ መረጃ</Accordion.Header>
+              <Accordion.Header>
+                የተበዳሪ ሙሉ መረጃ
+                <a href={`/customerprofileedit/${customerId}`}>Edit</a>
+              </Accordion.Header>
               <Accordion.Body>
                 <CustomerProfileView customer={customer} />
               </Accordion.Body>
             </Accordion.Item>
             <Accordion.Item eventKey="2">
-              <Accordion.Header>
-                የተበዳሪ (የትዳር ሁኔታ) {" " + loan.isMarried ? "ያገባ" : "ያላገባ" + " "}{" "}
-                ዶክመንቶች
-              </Accordion.Header>
-              <Accordion.Body>
-                {loan.isMarried ? (
-                  <>
-                    <Accordion.Header>
-                      የተበዳሪ (የትዳር ሁኔታ) ያገባ ዶክመንቶች
-                    </Accordion.Header>
-                    <Accordion.Body>
-                      <CustomerMarriedView
-                        customer={customer}
-                        marriedgeneralfiles={customer.marriedgeneralfiles}
-                      />
-                    </Accordion.Body>
-                  </>
-                ) : (
-                  <>
-                    <Accordion.Header>
-                      የተበዳሪ (የትዳር ሁኔታ) ያላገባ ዶክመንቶች
-                    </Accordion.Header>
-                    <Accordion.Body>
-                      <CustomerSingleView
-                        customer={customer}
-                        singlegeneralfiles={customer.singlegeneralfiles}
-                      />
-                    </Accordion.Body>
-                  </>
-                )}
-              </Accordion.Body>
+              {loan.isMarried ? (
+                <>
+                  <Accordion.Header>
+                    የተበዳሪ (የትዳር ሁኔታ) ያገባ ዶክመንቶች
+                    <a href={`/marriedcustomeredit/${customerId}`}>Edit</a>
+                  </Accordion.Header>
+                  <Accordion.Body>
+                    <CustomerMarriedView
+                      customer={customer}
+                      marriedgeneralfiles={customer.marriedgeneralfiles}
+                    />
+                  </Accordion.Body>
+                </>
+              ) : (
+                <>
+                  <Accordion.Header>
+                    የተበዳሪ (የትዳር ሁኔታ) ያላገባ ዶክመንቶች
+                    <a href={`/singlecustomeredit/${customerId}`}>Edit</a>
+                  </Accordion.Header>
+                  <Accordion.Body>
+                    <CustomerSingleView
+                      customer={customer}
+                      singlegeneralfiles={customer.singlegeneralfiles}
+                    />
+                  </Accordion.Body>
+                </>
+              )}
             </Accordion.Item>
             <Accordion.Item eventKey="3">
-              <Accordion.Header>የብድር መረጃ</Accordion.Header>
+              <Accordion.Header
+                style={{
+                  display: "flex",
+                  flex: 1,
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                }}
+              >
+                <div>የብድር መረጃ</div>
+
+                <a href={`/customerloanedit/${customerId}/${loanId}`}>Edit</a>
+              </Accordion.Header>
               <Accordion.Body>
                 <CustomerLoanView loan={loan} />
               </Accordion.Body>
             </Accordion.Item>
             <Accordion.Item eventKey="4">
               <Accordion.Header
-                style={loan.collateralcar?.length > 0 ? availableCss : nullCss}
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignContent: "space-between",
+                  alignItems: "space-between",
+                }}
               >
-                የመኪና መያዣ
+                <div>መያዣ</div>
+                {!loan.to_o && (
+                  <div>
+                    <a href={`/collaterals/${loanId}`}>Edit</a>
+                  </div>
+                )}
               </Accordion.Header>
               <Accordion.Body>
-                <CollateralCarView collateralcar={loan.collateralcar} />
-              </Accordion.Body>
-            </Accordion.Item>
-            <Accordion.Item eventKey="5">
-              <Accordion.Header>የቤት መያዣ</Accordion.Header>
-              <Accordion.Body>
-                <CollateralHomeView collateralhome={loan.collateralhome} />
+                <CollateralsView collateralcar={loan.collateralcar}  collateralhome={loan.collateralhome} />
               </Accordion.Body>
             </Accordion.Item>
           </Accordion>
@@ -237,6 +239,7 @@ function LoanOnAuditor() {
               })}
             </ListGroup>
           )}
+
           <Form>
             <Form.Group className="mb-3" controlId="formGroupEmail">
               <Form.Label> Comment </Form.Label>
@@ -248,7 +251,7 @@ function LoanOnAuditor() {
               />
             </Form.Group>
             <div style={{ display: "flex", justifyContent: "flex-end" }}>
-              <Button className="btn btn-sm" onClick={rejectWithComment}>
+              <Button className="btn-warning btn-sm" onClick={rejectWithComment}>
                 Reject With Comment
               </Button>
             </div>

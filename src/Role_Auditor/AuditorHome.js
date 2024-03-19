@@ -4,6 +4,7 @@ import { Alert, Button, ButtonGroup, Table, Modal } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { FaPencilAlt, FaPlus } from 'react-icons/fa';
+import LoanStatus from '../Common/LoanStatus';
 
 function AuditorHome() {
   const [loans, setLoans] = useState([]);
@@ -61,9 +62,9 @@ function AuditorHome() {
                     <td> {loan.customer.amDisplayName} </td>
                     <td> {loan.assignedTo?.first_name} </td>
                     <td style={{ textAlign: 'center' }}>
-                      <a href={`/loanonauditor/${loan.customer?.id}/${loan.id}`}>{loan.approvedPrincipal}</a>
+                      <a href={`/loanonauditor/${loan.customer?.id}/${loan.id}`}>{loan.approvedPrincipal?.toLocaleString()}</a>
                     </td>
-                    <td></td>
+                    <td> <LoanStatus loan={loan} /> </td>
                   </tr>
                 );
               })}

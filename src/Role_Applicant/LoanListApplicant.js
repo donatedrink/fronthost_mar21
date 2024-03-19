@@ -141,9 +141,8 @@ function LoanListApplicant() {
                 <th>ExternalID</th>
                 <th>Full Name</th>
                 <th>Assigned To</th>
-                <th>Assign</th>
-                <th>Status</th>
-                <th>Review</th>
+                <th>Principal</th>
+                <th>Status / Review</th>
               </tr>
             </thead>
             <tbody>
@@ -154,19 +153,22 @@ function LoanListApplicant() {
                     <td> {loan.customer.amDisplayName} </td>
                     <td> {loan.assignedTo?.first_name} </td>
                     <td style={{ textAlign: "center" }}>
-                      <a
-                        href={`/loanonapplicant/${loan.customer.id}/${loan.id}`}
-                      >
-                        {loan.approvedPrincipal}
-                      </a>
+                      {loan.auditorApproved ? (
+                        <>{loan.approvedPrincipal?.toLocaleString()}</>
+                      ) : loan.toauditor ? (
+                        <>{loan.approvedPrincipal?.toLocaleString()}</>
+                      ) : loan.to_o ? (
+                        <>{loan.approvedPrincipal?.toLocaleString()}</>
+                      ) : (
+                        <a
+                          href={`/loanonapplicant/${loan.customer.id}/${loan.id}`}
+                        >
+                          {loan.approvedPrincipal?.toLocaleString()}
+                        </a>
+                      )}
                     </td>
                     <td>
                       <LoanStatus loan={loan} />
-                    </td>
-                    <td>
-                      <a href={`/review/${loan.customer?.id}/${loan.id}`}>
-                        Review
-                      </a>
                     </td>
                   </tr>
                 );

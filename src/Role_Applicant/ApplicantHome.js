@@ -8,7 +8,6 @@ import ListGroup from "react-bootstrap/ListGroup";
 import { ToastContainer, toast } from "react-toastify";
 
 function ApplicantHome() {
-  
   const [externalId, setExternalId] = useState(0);
   const [activeLoanPlan, setActiveLoanPlan] = useState({});
   const [djangoUser, setDjangoUser] = useState([]);
@@ -125,7 +124,8 @@ function ApplicantHome() {
 
         annualInterestRate: amisiLoanPlan.annualInterestRate,
         numberOfRepayments: amisiLoanPlan.numberOfRepayments,
-        totalDueForPeriod: amisiLoanPlan.repaymentSchedule.periods[2].totalDueForPeriod,
+        totalDueForPeriod:
+          amisiLoanPlan.repaymentSchedule.periods[2].totalDueForPeriod,
       })
       .then((res) => {
         console.log(res.data);
@@ -172,6 +172,15 @@ function ApplicantHome() {
         amAddress: "Addis Ababa",
         dateOfBirth: "2024-01-17",
         isMarried: false,
+
+        address: "",
+        amAddress: "",
+
+        subcity: "",
+        amSubcity: "",
+        woreda: "",
+        amWoreda: "",
+        houseNum: "",
       })
       .then((res) => {
         searchUserOn_Django();
@@ -179,6 +188,7 @@ function ApplicantHome() {
       })
       .catch((err) => {
         console.log(" catch");
+        console.log(err)
       });
   };
 
@@ -206,7 +216,6 @@ function ApplicantHome() {
           </InputGroup>
         </div>
       </div>
-
 
       {searchDone && (
         <>
@@ -339,11 +348,15 @@ function ApplicantHome() {
                               Initialize Loan Plan
                             </Button>
                           ) : (
-                            <a 
-                            href={`/loanonapplicant/${djangoUser[0]?.id}/${djangoUser[0]?.loans[djangoUser[0].loans.length - 1]?.id}`}
-                          >
-                            Customer Loans
-                          </a>
+                            <a
+                              href={`/loanonapplicant/${djangoUser[0]?.id}/${
+                                djangoUser[0]?.loans[
+                                  djangoUser[0].loans.length - 1
+                                ]?.id
+                              }`}
+                            >
+                              Customer Loans
+                            </a>
                           )}
                         </>
                       )}

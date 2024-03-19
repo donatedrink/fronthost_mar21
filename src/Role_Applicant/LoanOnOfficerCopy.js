@@ -9,8 +9,7 @@ import Accordion from "react-bootstrap/Accordion";
 
 import CustomerLoanView from "../Review/Views/CustomerLoanView";
 import CustomerProfileView from "../Review/Views/CustomerProfileView";
-import CollateralHomeView from "../Review/Views/CollateralHomeView";
-import CollateralCarView from "../Review/Views/CollateralCarView";
+import CollateralsView from "../Review/Views/CollateralsView";
 
 import CustomerSingleView from "../Review/Views/CustomerSingleView";
 import CustomerMarriedView from "../Review/Views/CustomerMarriedView";
@@ -210,7 +209,7 @@ function LoanOnOfficer() {
                 </div>
               </Accordion.Header>
               <Accordion.Body>
-                <CollateralCarView collateralcar={loan.collateralcar} />
+                <CollateralsView collateralcar={loan.collateralcar} />
               </Accordion.Body>
             </Accordion.Item>
           </Accordion>

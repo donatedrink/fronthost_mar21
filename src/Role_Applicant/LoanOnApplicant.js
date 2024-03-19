@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Alert, Button, Modal } from "react-bootstrap";
-import Form from "react-bootstrap/Form";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import ListGroup from "react-bootstrap/ListGroup";
@@ -9,8 +8,7 @@ import Accordion from "react-bootstrap/Accordion";
 
 import CustomerLoanView from "../Review/Views/CustomerLoanView";
 import CustomerProfileView from "../Review/Views/CustomerProfileView";
-import CollateralHomeView from "../Review/Views/CollateralHomeView";
-import CollateralCarView from "../Review/Views/CollateralCarView";
+import CollateralsView from "../Collaterals/CollateralsView";
 
 import CustomerSingleView from "../Review/Views/CustomerSingleView";
 import CustomerMarriedView from "../Review/Views/CustomerMarriedView";
@@ -23,7 +21,6 @@ function LoanOnApplicant() {
   const { customerId, loanId } = useParams();
   const [customer, setCustomer] = useState([]);
   const [loan, setLoan] = useState([]);
-  const [commentText, setCommentText] = useState("");
 
   const [modalToOfficer, setModalToOfficer] = useState(false);
 
@@ -107,7 +104,7 @@ function LoanOnApplicant() {
             <div>
               {/* <a href={`/review/${loanId}`}>REVIEW</a> &nbsp;*/}
               {loan.to_o ? (
-                <>APPROVED</>
+                <>Sent To Officer</>
               ) : (
                 <Button
                   onClick={() => setModalToOfficer(true)}
@@ -124,10 +121,21 @@ function LoanOnApplicant() {
         <div className="col-sm-8">
           <Accordion defaultActiveKey="1">
             <Accordion.Item eventKey="1">
-              <Accordion.Header>የተበዳሪ ሙሉ መረጃ
-
-              <a href={`/customerprofileedit/${customerId}`}>Edit</a>
-
+              <Accordion.Header>
+                የተበዳሪ ሙሉ መረጃ
+                {!loan.auditorApproved ? (
+                  <>
+                    {!loan.to_o && (
+                      <a href={`/customerprofileedit/${customerId}`}>Edit</a>
+                    )}
+                  </>
+                ) : (
+                  <>
+                    {!loan.to_o && (
+                      <a href={`/customerprofileedit/${customerId}`}>Edit</a>
+                    )}
+                  </>
+                )}
               </Accordion.Header>
               <Accordion.Body>
                 <CustomerProfileView customer={customer} />
@@ -138,9 +146,23 @@ function LoanOnApplicant() {
                 <>
                   <Accordion.Header>
                     የተበዳሪ (የትዳር ሁኔታ) ያገባ ዶክመንቶች
-                    <a href={`/marriedcustomeredit/${customerId}`}>
-                      Edit
-                    </a>
+                    {!loan.auditorApproved ? (
+                      <>
+                        {!loan.to_o && (
+                          <a href={`/marriedcustomeredit/${customerId}`}>
+                            Edit
+                          </a>
+                        )}
+                      </>
+                    ) : (
+                      <>
+                        {!loan.to_o && (
+                          <a href={`/marriedcustomeredit/${customerId}`}>
+                            Edit
+                          </a>
+                        )}
+                      </>
+                    )}
                   </Accordion.Header>
                   <Accordion.Body>
                     <CustomerMarriedView
@@ -153,9 +175,19 @@ function LoanOnApplicant() {
                 <>
                   <Accordion.Header>
                     የተበዳሪ (የትዳር ሁኔታ) ያላገባ ዶክመንቶች
-                    <a href={`/singlecustomeredit/${customerId}`}>
-                      Edit
-                    </a>
+                    {!loan.auditorApproved ? (
+                      <>
+                        {!loan.to_o && (
+                          <a href={`/singlecustomeredit/${customerId}`}>Edit</a>
+                        )}
+                      </>
+                    ) : (
+                      <>
+                        {!loan.to_o && (
+                          <a href={`/singlecustomeredit/${customerId}`}>Edit</a>
+                        )}
+                      </>
+                    )}
                   </Accordion.Header>
                   <Accordion.Body>
                     <CustomerSingleView
@@ -177,7 +209,23 @@ function LoanOnApplicant() {
               >
                 <div>የብድር መረጃ</div>
 
-                <a href={`/customerloanedit/${customerId}/${loanId}`}>Edit</a>
+                {!loan.auditorApproved ? (
+                  <>
+                    {!loan.to_o && (
+                      <a href={`/customerloanedit/${customerId}/${loanId}`}>
+                        Edit
+                      </a>
+                    )}
+                  </>
+                ) : (
+                  <>
+                    {!loan.to_o && (
+                      <a href={`/customerloanedit/${customerId}/${loanId}`}>
+                        Edit
+                      </a>
+                    )}
+                  </>
+                )}
               </Accordion.Header>
               <Accordion.Body>
                 <CustomerLoanView loan={loan} />
@@ -193,14 +241,21 @@ function LoanOnApplicant() {
                 }}
               >
                 <div>መያዣ</div>
-                {!loan.to_o && (
-                  <div>
-                    <a href={`/collaterals/${loanId}`}>Edit</a>
-                  </div>
+                {!loan.auditorApproved ? (
+                  <>
+                    {!loan.to_o && <a href={`/collaterals/${loanId}`}>Edit</a>}
+                  </>
+                ) : (
+                  <>
+                    {!loan.to_o && <a href={`/collaterals/${loanId}`}>Edit</a>}
+                  </>
                 )}
               </Accordion.Header>
               <Accordion.Body>
-                <CollateralCarView collateralcar={loan.collateralcar} />
+                <CollateralsView
+                  collateralcar={loan.collateralcar}
+                  collateralhome={loan.collateralhome}
+                />
               </Accordion.Body>
             </Accordion.Item>
           </Accordion>

@@ -9,11 +9,15 @@ import Accordion from "react-bootstrap/Accordion";
 
 import CustomerLoanView from "../Review/Views/CustomerLoanView";
 import CustomerProfileView from "../Review/Views/CustomerProfileView";
-import CollateralHomeView from "../Review/Views/CollateralHomeView";
-import CollateralCarView from "../Review/Views/CollateralCarView";
+
+// import CollateralsView from "../Review/Views/CollateralsView";
+
+import CollateralsView from "../Collaterals/CollateralsView";
 
 import CustomerSingleView from "../Review/Views/CustomerSingleView";
 import CustomerMarriedView from "../Review/Views/CustomerMarriedView";
+
+import LoanStatus from "../Common/LoanStatus";
 
 import { ToastContainer, toast } from "react-toastify";
 import { FaTelegram } from "react-icons/fa";
@@ -25,7 +29,7 @@ function LoanOnOfficer() {
   const [loan, setLoan] = useState([]);
   const [commentText, setCommentText] = useState("");
 
-  const [modalToHeadOfficer, setModalToHeadOfficer] = useState(false);
+  const [modalToAuditor, setModalToAuditor] = useState(false);
 
   useEffect(() => {
     getCustomer();
@@ -77,14 +81,14 @@ function LoanOnOfficer() {
       });
   };
 
-  const sendToHeadOfficer = () => {
+  const sendToAuditor = () => {
     axios
       .patch(`http://localhost:8000/loan/loans/${loanId}/`, {
-        toho: true,
+        toauditor: true,
       })
       .then((res) => {
         console.log(res.data);
-        setModalToHeadOfficer(false);
+        setModalToAuditor(false);
         toast.success("Sucessfully Approved");
         getLoan();
       })
@@ -96,20 +100,14 @@ function LoanOnOfficer() {
   return (
     <div className="container">
       {/* Modal Edit Start  */}
-      <Modal
-        show={modalToHeadOfficer}
-        onHide={() => setModalToHeadOfficer(false)}
-      >
+      <Modal show={modalToAuditor} onHide={() => setModalToAuditor(false)}>
         <Modal.Header closeButton>
-          <Modal.Title style={{ color: "orange" }}>
-            {" "}
-            Send To Head Officer{" "}
-          </Modal.Title>
+          <Modal.Title style={{ color: "orange" }}>Send To Auditor</Modal.Title>
         </Modal.Header>
         <Modal.Body></Modal.Body>
         <Modal.Footer>
-          <Button variant="warning" onClick={() => sendToHeadOfficer()}>
-            <FaTelegram /> Send To Head Officer
+          <Button variant="warning" onClick={() => sendToAuditor()}>
+            <FaTelegram /> Send To Auditor
           </Button>
         </Modal.Footer>
       </Modal>
@@ -137,13 +135,16 @@ function LoanOnOfficer() {
                   Approve
                 </Button>
               )} */}
-
-              <Button
-                onClick={() => setModalToHeadOfficer(true)}
-                className="btn btn-sm"
-              >
-                <FaTelegram /> To Head Officer
-              </Button>
+              {loan.toauditor ? (
+                <>Sent To Auditor</>
+              ) : (
+                <Button
+                  onClick={() => setModalToAuditor(true)}
+                  className="btn btn-sm"
+                >
+                  <FaTelegram /> To Auditor
+                </Button>
+              )}
             </div>
           </Alert>
         </div>
@@ -187,13 +188,12 @@ function LoanOnOfficer() {
             <Accordion.Item eventKey="3">
               <Accordion.Header
                 style={{
-                  display:"flex",
+                  display: "flex",
                   flex: 1,
                   flexDirection: "column",
                   justifyContent: "space-between",
                 }}
               >
-                <div>የብድር መረጃ</div>
                 <div>የብድር መረጃ</div>
               </Accordion.Header>
               <Accordion.Body>
@@ -202,15 +202,23 @@ function LoanOnOfficer() {
             </Accordion.Item>
             <Accordion.Item eventKey="4">
               <Accordion.Header
-                style={{ display: "flex", justifyContent: "space-between", alignContent:"space-between", alignItems:"space-between" }}
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignContent: "space-between",
+                  alignItems: "space-between",
+                }}
               >
                 <div>መያዣ</div>
-                <div>
+                {/* <div>
                   <a href={`/collaterals/${loanId}`}>Edit</a>
-                </div>
+                </div> */}
               </Accordion.Header>
               <Accordion.Body>
-                <CollateralCarView collateralcar={loan.collateralcar} />
+                <CollateralsView
+                  collateralcar={loan.collateralcar}
+                  collateralhome={loan.collateralhome}
+                />
               </Accordion.Body>
             </Accordion.Item>
           </Accordion>

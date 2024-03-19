@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Alert, Table } from "react-bootstrap";
 import { useSelector } from "react-redux";
+import LoanStatus from "../Common/LoanStatus";
 
 function OfficerHome() {
   const { data } = useSelector((store) => store.customer);
@@ -43,8 +44,8 @@ function OfficerHome() {
             </thead>
             <tbody>
               {loans.map((loan) => {
-                {
-                  if ((loan.customer?.entityExternalId%1000)%100%10 === data.id) {
+                // {
+                //   if ((loan.customer?.entityExternalId%1000)%100%10 === data.id) {
                     return (
                       <tr>
                         <td> {loan.customer?.entityExternalId} </td>
@@ -53,22 +54,18 @@ function OfficerHome() {
                           <a
                             href={`/loanonofficer/${loan.customer?.id}/${loan.id}`}
                           >
-                            {loan.approvedPrincipal}
+                            {loan.approvedPrincipal?.toLocaleString()}
                           </a>
                         </td>
                         <td>
-                          {loan.auditorApproved ? (
-                            <>Approved</>
-                          ) : (
-                            <>Waiting</>
-                          )}
+                        <LoanStatus loan={loan} /> 
                         </td>
                       </tr>
                     );
-                  } else {
-                    return <></>;
-                  }
-                }
+                  // } else {
+                  //   return <></>;
+                  // }
+                // }
               })}
             </tbody>
           </Table>
