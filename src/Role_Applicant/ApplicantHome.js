@@ -160,15 +160,20 @@ function ApplicantHome() {
         totalDueForPeriod:
           amisiLoanPlan.repaymentSchedule.periods[2].totalDueForPeriod,
 
-        // prcntServiceCharge: objServiceCharge[0]?.percentage,
-        // prcntLifeInsurance: objLifeInsurance[0]?.percentage,
-        // multiplier: 2,
-        // flatServiceCharge: objServiceCharge[0]?.amount,
-        // flatLifeInsurance: objLifeInsurance[0]?.amount,
-        // tembr: objTembir[0]?.amount,
+        prcntServiceCharge: objServiceCharge[0]?.percentage,
+        prcntLifeInsurance: objLifeInsurance[0]?.percentage,
+        multiplier: 2,
+        flatServiceCharge: objServiceCharge[0]?.amount,
+        flatLifeInsurance: objLifeInsurance[0]?.amount,
+        tembr: objTembir[0]?.amount,
 
-        totalInterestPayment: amisisUserDetails.repaymentSchedule?.totalInterestCharged,
-
+        totalInterestPayment:
+          amisisUserDetails.repaymentSchedule?.totalInterestCharged,
+        expectedDisbursementDate: formatDateForDjango(
+          amisisUserDetails?.timeline?.expectedDisbursementDate[0],
+          amisisUserDetails?.timeline?.expectedDisbursementDate[1],
+          amisisUserDetails?.timeline?.expectedDisbursementDate[2]
+        ),
       })
       .then((res) => {
         console.log(res.data);
@@ -214,11 +219,6 @@ function ApplicantHome() {
       .post(`${serverIP}customer/customers/`, {
         entityAccountNo: amisisUserDetails.accountNo,
         entityExternalId: amisisUser.externalId,
-        // expectedDisbursementDate: formatDateForDjango(
-        //   amisisUserDetails?.timeline?.expectedDisbursementDate[0],
-        //   amisisUserDetails?.timeline?.expectedDisbursementDate[1],
-        //   amisisUserDetails?.timeline?.expectedDisbursementDate[2]
-        // ),
 
         activationDate: formatDateForDjango(
           amisisUserDetails?.activationDate[0],
