@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 
 function CarGarageReport(props) {
-  const { langName, serverIP, loadingFinished } = useSelector((store) => store.allsettings);
+  const {  serverIP, loadingFinished } = useSelector((store) => store.allsettings);
   const [garageValue, setGarageValue] = useState(0);
   const [show, setShow] = useState(false);
   const [editModal, setEditModal] = useState(false);

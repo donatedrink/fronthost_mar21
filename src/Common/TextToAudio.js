@@ -2,27 +2,37 @@ import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
+import { useSelector, useDispatch } from "react-redux";
+import { changeIP } from "./redux/settingSlice";
 
 function TextToAudio() {
+  const {  serverIP, loadingFinished } = useSelector(
+    (store) => store.allsettings
+  );
   const [texts, setTexts] = useState("");
+  const [ipAddress, setIpAddress] = useState("");
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    speakArabicText('مرحبا كيف حالك؟', 1, 1); 
-    speakGeEzText('ሰላም', 'am', 1.2, 1);
-
+    speakArabicText("مرحبا كيف حالك؟", 1, 1);
+    speakGeEzText("ሰላም", "am", 1.2, 1);
   }, []);
 
-  function speakGeEzText(text, languageCode = 'am', pitch = 1, rate = 1) {
-    window.speechSynthesis.onvoiceschanged = function() {
+  function speakGeEzText(text, languageCode = "am", pitch = 1, rate = 1) {
+    window.speechSynthesis.onvoiceschanged = function () {
       var voices = window.speechSynthesis.getVoices();
-      var languageVoice = voices.find(voice => voice.lang === languageCode || voice.lang.startsWith(`${languageCode}-`));
-  
-      if(languageVoice) {
+      var languageVoice = voices.find(
+        (voice) =>
+          voice.lang === languageCode ||
+          voice.lang.startsWith(`${languageCode}-`)
+      );
+
+      if (languageVoice) {
         var utterance = new SpeechSynthesisUtterance(text);
         utterance.voice = languageVoice;
         utterance.pitch = pitch;
         utterance.rate = rate;
-  
+
         window.speechSynthesis.speak(utterance);
       } else {
         console.log(`No voice found for language code: ${languageCode}`);
@@ -32,27 +42,25 @@ function TextToAudio() {
 
   function speakArabicText(text, pitch = 1, rate = 1) {
     // Ensure the voices are loaded
-    window.speechSynthesis.onvoiceschanged = function() {
+    window.speechSynthesis.onvoiceschanged = function () {
       var voices = window.speechSynthesis.getVoices();
       // Find a voice that supports Arabic
-      var arabicVoice = voices.find(voice => voice.lang.startsWith('ar'));
-  
-      if(arabicVoice) {
+      var arabicVoice = voices.find((voice) => voice.lang.startsWith("ar"));
+
+      if (arabicVoice) {
         // Create an utterance in Arabic
         var utterance = new SpeechSynthesisUtterance(text);
         utterance.voice = arabicVoice; // Set the found Arabic voice
         utterance.pitch = pitch; // Adjust pitch if needed
         utterance.rate = rate; // Adjust rate if needed
-  
+
         // Speak the text
         window.speechSynthesis.speak(utterance);
       } else {
-        console.log('No Arabic voice found');
+        console.log("No Arabic voice found");
       }
     };
   }
-  
-  
 
   const changeToAudio = () => {
     if ("speechSynthesis" in window) {
@@ -78,6 +86,10 @@ function TextToAudio() {
     }
   };
 
+  const changeIp = () => {
+    console.log("changeIp");
+  };
+
   return (
     <div className="container">
       <InputGroup>
@@ -91,6 +103,37 @@ function TextToAudio() {
       <Button onClick={changeToAudio} style={{ marginTop: 15 }}>
         Change To Audio
       </Button>
+
+      <ul>
+        <li>http://localhost:8000/</li>
+        <li>http://localhost:8000/</li>
+      </ul>
+
+      <hr />
+      {serverIP}
+      <hr />
+      <div class="input-group mb-3">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Ip Address"
+          onChange={(e) => setIpAddress(e.target.value)}
+        />
+        <button
+          class="btn btn-outline-secondary"
+          type="button"
+          id="button-addon2"
+          onClick={() => {
+            dispatch(
+              changeIP({
+                serverIP: ipAddress,
+              })
+            );
+          }}
+        >
+          Change IP
+        </button>
+      </div>
     </div>
   );
 }

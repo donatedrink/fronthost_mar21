@@ -6,7 +6,7 @@ import { Alert, Card } from "react-bootstrap";
 import { FaCarAlt, FaHome, FaTrashAlt, FaUserAlt } from 'react-icons/fa';
 
 function Review() {
-  const { langName, serverIP, loadingFinished } = useSelector((store) => store.allsettings);
+  const {  serverIP, loadingFinished } = useSelector((store) => store.allsettings);
   const { data } = useSelector((store) => store.customer);
   const { customerId, loanId } = useParams();
   const [customer, setCustomer] = useState([]);

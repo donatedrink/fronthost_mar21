@@ -9,7 +9,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import { useSelector } from "react-redux";
 
 function CarModel() {
-  const { langName, serverIP, loadingFinished } = useSelector((store) => store.allsettings);
+  const {  serverIP, loadingFinished } = useSelector((store) => store.allsettings);
   const [carModel, setCarModel] = useState([]);
   const [modalAdd, setModalAdd] = useState(false);
   const [modalEdit, setModalEdit] = useState(false);

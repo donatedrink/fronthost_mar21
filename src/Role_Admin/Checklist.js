@@ -9,7 +9,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import { useSelector } from "react-redux";
 
 function Checklist() {
-  const { langName, serverIP, loadingFinished } = useSelector((store) => store.allsettings);
+  const {  serverIP, loadingFinished } = useSelector((store) => store.allsettings);
   const { chktypeid } = useParams();
   const [chklist, setChklist] = useState([]);
   const [chklistType, setChklistType] = useState([]);

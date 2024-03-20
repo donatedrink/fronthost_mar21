@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 
 function CarFiles(props) {
-  const { langName, serverIP, loadingFinished } = useSelector((store) => store.allsettings);
+  const {  serverIP, loadingFinished } = useSelector((store) => store.allsettings);
   const [checkListId, setCheckListId] = useState(1);
   const [chklst, setChklst] = useState([]);
   const [chklstUploaded, setChklstUploaded] = useState([]);

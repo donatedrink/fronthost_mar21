@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 
 function CarCollateralFiles() {
-  const { langName, serverIP, loadingFinished } = useSelector((store) => store.allsettings);
+  const {  serverIP, loadingFinished } = useSelector((store) => store.allsettings);
   const { collateralId } = useParams();
   const [collateralDetail, setCollateralDetail] = useState([]);
 

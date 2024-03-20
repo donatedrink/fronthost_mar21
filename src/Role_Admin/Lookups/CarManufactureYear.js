@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 
 
 function CarManufactureYear() {
-  const { langName, serverIP, loadingFinished } = useSelector((store) => store.allsettings);
+  const {  serverIP, loadingFinished } = useSelector((store) => store.allsettings);
   const [myear, setMyear] = useState([]);
   const [modalAdd, setModalAdd] = useState(false);
   const [modalEdit, setModalEdit] = useState(false);

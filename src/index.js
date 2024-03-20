@@ -46,6 +46,7 @@ import CustomerLoanEdit from "./Review/Edit/CustomerLoanEdit"
 // Report
 import AgreementDoc from "./Reports/AgreementDoc";
 import Reports from "./Reports/Reports";
+import TextToAudio from "./Common/TextToAudio";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 let persistor = persistStore(store);
@@ -68,6 +69,8 @@ root.render(
                   </ProtectedRoute>
                 }
               />
+              <Route path="/texttoaudio" element={<TextToAudio />} />
+              
               {/* Collaterals  */}
               <Route path="/collaterals/:loanId" element={<Collaterals />} />
               <Route

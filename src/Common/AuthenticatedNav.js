@@ -33,7 +33,7 @@ function AuthenticatedNav() {
           <Nav className="me-auto">
             {data.groups[0] === 'ROLE_APPLICANT' && <Nav.Link href="/loanlistapplicant">Processed-Loans</Nav.Link>}
 
-            {data.groups[0] === 'ROLE_OFFICER' && (
+            {/* {data.groups[0] === 'ROLE_OFFICER' && (
               <NavDropdown title="Reports" id="basic-nav-dropdown">
                 <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
@@ -41,7 +41,7 @@ function AuthenticatedNav() {
                 <NavDropdown.Divider />
                 <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
               </NavDropdown>
-            )}
+            )} */}
           </Nav>
           <div className="d-flex userMenu">
             <NavDropdown

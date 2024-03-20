@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 
 function ApplicantHome() {
-  const { langName, serverIP, loadingFinished } = useSelector((store) => store.allsettings);
+  const {  serverIP, loadingFinished } = useSelector((store) => store.allsettings);
 
   const [externalId, setExternalId] = useState(0);
   const [activeLoanPlan, setActiveLoanPlan] = useState({});

@@ -17,7 +17,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { FaTelegram } from "react-icons/fa";
 
 function LoanOnApplicant() {
-  const { langName, serverIP, loadingFinished } = useSelector((store) => store.allsettings);
+  const {  serverIP, loadingFinished } = useSelector((store) => store.allsettings);
   const { data } = useSelector((store) => store.customer);
   const { customerId, loanId } = useParams();
   const [customer, setCustomer] = useState([]);

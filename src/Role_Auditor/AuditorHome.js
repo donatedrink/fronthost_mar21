@@ -1,14 +1,11 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { Alert, Button, ButtonGroup, Table, Modal } from 'react-bootstrap';
-import Form from 'react-bootstrap/Form';
-import InputGroup from 'react-bootstrap/InputGroup';
-import { FaPencilAlt, FaPlus } from 'react-icons/fa';
-import LoanStatus from '../Common/LoanStatus';
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { Table } from "react-bootstrap";
+import LoanStatus from "../Common/LoanStatus";
 import { useSelector } from "react-redux";
 
 function AuditorHome() {
-  const { langName, serverIP, loadingFinished } = useSelector((store) => store.allsettings);
+  const { serverIP } = useSelector((store) => store.allsettings);
   const [loans, setLoans] = useState([]);
   const [filteredLoans, setFilteredLoans] = useState([]);
 
@@ -39,7 +36,13 @@ function AuditorHome() {
             placeholder="external ID"
             aria-describedby="basic-addon2"
             onChange={(e) =>
-              setFilteredLoans(loans.filter((x) => x.customer.entityExternalId.toString().includes(e.target.value)))
+              setFilteredLoans(
+                loans.filter((x) =>
+                  x.customer.entityExternalId
+                    .toString()
+                    .includes(e.target.value)
+                )
+              )
             }
           />
         </div>
@@ -63,10 +66,17 @@ function AuditorHome() {
                     <td> {loan.customer.entityExternalId} </td>
                     <td> {loan.customer.amDisplayName} </td>
                     <td> {loan.assignedTo?.first_name} </td>
-                    <td style={{ textAlign: 'center' }}>
-                      <a href={`/loanonauditor/${loan.customer?.id}/${loan.id}`}>{loan.approvedPrincipal?.toLocaleString()}</a>
+                    <td style={{ textAlign: "center" }}>
+                      <a
+                        href={`/loanonauditor/${loan.customer?.id}/${loan.id}`}
+                      >
+                        {loan.approvedPrincipal?.toLocaleString()}
+                      </a>
                     </td>
-                    <td> <LoanStatus loan={loan} /> </td>
+                    <td>
+                      {" "}
+                      <LoanStatus loan={loan} />{" "}
+                    </td>
                   </tr>
                 );
               })}
@@ -78,5 +88,4 @@ function AuditorHome() {
   );
 }
 
-
-export default AuditorHome
+export default AuditorHome;

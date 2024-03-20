@@ -12,7 +12,7 @@ import InputGroup from "react-bootstrap/InputGroup";
 import { useDispatch, useSelector } from 'react-redux';
 
 function CarMarketValue(props) {
-  const { langName, serverIP, loadingFinished } = useSelector((store) => store.allsettings);
+  const {  serverIP, loadingFinished } = useSelector((store) => store.allsettings);
 
   const [marketValue, setMarketValue] = useState(0);
 

@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import LoanStatus from "../Common/LoanStatus";
 
 function OfficerHome() {
-  const { langName, serverIP, loadingFinished } = useSelector((store) => store.allsettings);
+  const {  serverIP, loadingFinished } = useSelector((store) => store.allsettings);
 
   const { data } = useSelector((store) => store.customer);
   const [loans, setLoans] = useState([]);
@@ -30,7 +30,7 @@ function OfficerHome() {
     <div className="container">
       <Alert>
         Loans assigned to <strong> {data.first_name} </strong>
-        {JSON.stringify(data)}
+        {/* {JSON.stringify(data)} */}
       </Alert>
 
       <div className="row">
