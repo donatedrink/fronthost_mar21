@@ -8,9 +8,8 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import { useSelector } from "react-redux";
 
-
 function CarManufactureYear() {
-  const {  serverIP, loadingFinished } = useSelector((store) => store.allsettings);
+  const { serverIP } = useSelector((store) => store.allsettings);
   const [myear, setMyear] = useState([]);
   const [modalAdd, setModalAdd] = useState(false);
   const [modalEdit, setModalEdit] = useState(false);
@@ -60,9 +59,7 @@ function CarManufactureYear() {
 
   const deleteManufactureYear = () => {
     axios
-      .delete(
-        `${serverIP}car_manufacturer/carmanufacture/${targetRecord.id}`
-      )
+      .delete(`${serverIP}car_manufacturer/carmanufacture/${targetRecord.id}`)
       .then((res) => {
         console.log(res.data);
         setModalDelete(false);

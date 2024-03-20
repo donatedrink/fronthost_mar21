@@ -7,11 +7,10 @@ import HomeCollateralSchema from "../Schema/HomeCollateralSchema";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import { FaHome, FaPencilAlt, FaTrashAlt } from "react-icons/fa";
-import { Badge } from "react-bootstrap";
 import { useSelector } from "react-redux";
 
 function HomeCollateral(props) {
-  const {  serverIP, loadingFinished } = useSelector((store) => store.allsettings);
+  const { serverIP } = useSelector((store) => store.allsettings);
   const [loan, setLoan] = useState([]);
   const [homeTypes, setHomeTypes] = useState([]);
   const [showAddModal, setShowAddModal] = useState(false);
@@ -85,9 +84,7 @@ function HomeCollateral(props) {
   };
   const deleteHome = () => {
     axios
-      .delete(
-        `${serverIP}collateral_home/collateralhomes/${targetHome.id}`
-      )
+      .delete(`${serverIP}collateral_home/collateralhomes/${targetHome.id}`)
       .then((res) => {
         console.log(res.data);
         setShowDeleteModal(false);
@@ -375,7 +372,12 @@ function HomeCollateral(props) {
                             home.homearea * home.hometype?.pricepercaremeter
                           ).toLocaleString()}
                       </td>
-                      <td style={{ display:"flex", justifyContent:"space-evenly" }}>
+                      <td
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-evenly",
+                        }}
+                      >
                         <FaTrashAlt
                           onClick={() => {
                             setShowDeleteModal(true);

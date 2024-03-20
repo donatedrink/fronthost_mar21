@@ -5,11 +5,10 @@ import axios from "axios";
 import CarFiles from "./Car/CarFiles";
 import CarMarketValue from "./Car/CarMarketValue";
 import CarGarageReport from "./Car/CarGarageReport";
-import { useDispatch, useSelector } from 'react-redux';
-
+import { useSelector } from "react-redux";
 
 function CarCollateralFiles() {
-  const {  serverIP, loadingFinished } = useSelector((store) => store.allsettings);
+  const { serverIP } = useSelector((store) => store.allsettings);
   const { collateralId } = useParams();
   const [collateralDetail, setCollateralDetail] = useState([]);
 
@@ -47,7 +46,7 @@ function CarCollateralFiles() {
         <Accordion.Item eventKey="2">
           <Accordion.Header> የገበያ ዋጋ ጥናት </Accordion.Header>
           <Accordion.Body>
-            <CarMarketValue collateralId={collateralId}/>
+            <CarMarketValue collateralId={collateralId} />
           </Accordion.Body>
         </Accordion.Item>
 

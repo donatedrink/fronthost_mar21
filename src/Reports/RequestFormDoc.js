@@ -44,6 +44,7 @@ const Subtitle = ({ children, ...props }) => (
 );
 
 function RequestFormDoc() {
+  const { serverIP } = useSelector((store) => store.allsettings);
   const { customerId, loanId } = useParams();
   const [customer, setCustomer] = useState([]);
   const [loan, setLoan] = useState([]);
@@ -162,7 +163,7 @@ function RequestFormDoc() {
                 bgcolor="orange"
                 textalign="center"
                 zvalue={Number(
-                  loan.approvedPrincipalDisbursed.toFixed(2)
+                  loan.approvedPrincipal.toFixed(2)
                 ).toLocaleString("am-ET", EtCurrency)}
               />
               <Btable
@@ -189,7 +190,7 @@ function RequestFormDoc() {
               <Btable
                 zid="19"
                 zkey="ወርሃዊ ክፍያ"
-                zvalue={loan.totalDueForPeriod}
+                zvalue={loan.totalDueForPeriod?.toLocaleString()}
               />
               <Btable
                 zid="20"

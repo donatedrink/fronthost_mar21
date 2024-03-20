@@ -1,20 +1,20 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { Alert, Button, ButtonGroup, Table, Modal } from 'react-bootstrap';
-import { FaPencilAlt, FaTrashAlt } from 'react-icons/fa';
-import { useParams } from 'react-router-dom';
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { Alert, Button, ButtonGroup, Table, Modal } from "react-bootstrap";
+import { FaPencilAlt, FaTrashAlt } from "react-icons/fa";
+import { useParams } from "react-router-dom";
 
-import Form from 'react-bootstrap/Form';
-import InputGroup from 'react-bootstrap/InputGroup';
+import Form from "react-bootstrap/Form";
+import InputGroup from "react-bootstrap/InputGroup";
 import { useSelector } from "react-redux";
 
 function Checklist() {
-  const {  serverIP, loadingFinished } = useSelector((store) => store.allsettings);
+  const { serverIP } = useSelector((store) => store.allsettings);
   const { chktypeid } = useParams();
   const [chklist, setChklist] = useState([]);
   const [chklistType, setChklistType] = useState([]);
-  const [name, setName] = useState('');
-  const [amName, setAmName] = useState('');
+  const [name, setName] = useState("");
+  const [amName, setAmName] = useState("");
 
   const [modalAdd, setModalAdd] = useState(false);
   const [modalEdit, setModalEdit] = useState(false);
@@ -57,7 +57,7 @@ function Checklist() {
         enName: name,
         amName: amName,
         isMandatory: true,
-        parent: chktypeid
+        parent: chktypeid,
       })
       .then((res) => {
         console.log(res.data);
@@ -72,7 +72,7 @@ function Checklist() {
     axios
       .patch(`${serverIP}checklist/checklists/${targetObj.id}/`, {
         enName: name,
-        amName: amName
+        amName: amName,
       })
       .then((res) => {
         console.log(res.data);
@@ -104,13 +104,13 @@ function Checklist() {
         <Modal.Header closeButton>
           <Modal.Title>
             <div>
-              <div style={{ fontSize: 'bold' }}>ምድብ</div>
+              <div style={{ fontSize: "bold" }}>ምድብ</div>
               <div>{chklistType.amName}</div>
             </div>
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-        <InputGroup className="mb-3">
+          <InputGroup className="mb-3">
             <InputGroup.Text id="basic-addon1">ስም </InputGroup.Text>
             <Form.Control
               placeholder="ስም"
@@ -138,7 +138,7 @@ function Checklist() {
       {/* Modal Edit Start  */}
       <Modal show={modalEdit} onHide={() => setModalEdit(false)}>
         <Modal.Header closeButton>
-          <Modal.Title style={{ color: 'orange' }}> Edit </Modal.Title>
+          <Modal.Title style={{ color: "orange" }}> Edit </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <InputGroup className="mb-3">
@@ -170,7 +170,7 @@ function Checklist() {
 
       {/* Modal Delete Start  */}
       <Modal show={modalDelete} onHide={() => setModalDelete(false)}>
-        <Modal.Header style={{ color: 'red' }} closeButton>
+        <Modal.Header style={{ color: "red" }} closeButton>
           <Modal.Title color="red"> Delete </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -187,10 +187,21 @@ function Checklist() {
       {/* Modals End  */}
 
       <Alert variant="info">
-        <div style={{ display: 'flex', justifyContent: 'space-between', padding: 0, margin: 0 }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            padding: 0,
+            margin: 0,
+          }}
+        >
           <div>{chklistType.amName}</div>
           <div>
-            <Button variant="primary" className="btn-sm" onClick={() => setModalAdd(true)}>
+            <Button
+              variant="primary"
+              className="btn-sm"
+              onClick={() => setModalAdd(true)}
+            >
               Add
             </Button>
           </div>
@@ -215,22 +226,21 @@ function Checklist() {
                   <td>{chk.enName}</td>
                   <td>
                     <ButtonGroup size="sm">
-                     
                       <FaTrashAlt
                         color="red"
                         onClick={() => {
                           setModalDelete(true);
                           setTargetObj(chk);
                         }}
-                      />{' '}
+                      />{" "}
                       &nbsp;
                       <FaPencilAlt
                         color="orange"
                         onClick={() => {
                           setModalEdit(true);
                           setTargetObj(chk);
-                          setName(chk.enName)
-                          setAmName(chk.amName)
+                          setName(chk.enName);
+                          setAmName(chk.amName);
                         }}
                       />
                     </ButtonGroup>

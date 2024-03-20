@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import LoanStatus from "../Common/LoanStatus";
 
 function OfficerHome() {
-  const {  serverIP, loadingFinished } = useSelector((store) => store.allsettings);
+  const { serverIP } = useSelector((store) => store.allsettings);
 
   const { data } = useSelector((store) => store.customer);
   const [loans, setLoans] = useState([]);
@@ -48,25 +48,25 @@ function OfficerHome() {
               {loans.map((loan) => {
                 // {
                 //   if ((loan.customer?.entityExternalId%1000)%100%10 === data.id) {
-                    return (
-                      <tr>
-                        <td> {loan.customer?.entityExternalId} </td>
-                        <td> {loan.customer?.amDisplayName} </td>
-                        <td>
-                          <a
-                            href={`/loanonofficer/${loan.customer?.id}/${loan.id}`}
-                          >
-                            {loan.approvedPrincipal?.toLocaleString()}
-                          </a>
-                        </td>
-                        <td>
-                        <LoanStatus loan={loan} /> 
-                        </td>
-                      </tr>
-                    );
-                  // } else {
-                  //   return <></>;
-                  // }
+                return (
+                  <tr>
+                    <td> {loan.customer?.entityExternalId} </td>
+                    <td> {loan.customer?.amDisplayName} </td>
+                    <td>
+                      <a
+                        href={`/loanonofficer/${loan.customer?.id}/${loan.id}`}
+                      >
+                        {loan.approvedPrincipal?.toLocaleString()}
+                      </a>
+                    </td>
+                    <td>
+                      <LoanStatus loan={loan} />
+                    </td>
+                  </tr>
+                );
+                // } else {
+                //   return <></>;
+                // }
                 // }
               })}
             </tbody>

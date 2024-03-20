@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Alert, Button, ButtonGroup, Table } from 'react-bootstrap';
-import { FaPencilAlt, FaTrashAlt } from 'react-icons/fa';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Alert, Button, ButtonGroup, Table } from "react-bootstrap";
+import { FaPencilAlt, FaTrashAlt } from "react-icons/fa";
 
-import Modal from 'react-bootstrap/Modal';
-import Form from 'react-bootstrap/Form';
-import InputGroup from 'react-bootstrap/InputGroup';
+import Modal from "react-bootstrap/Modal";
+import Form from "react-bootstrap/Form";
+import InputGroup from "react-bootstrap/InputGroup";
 import { useSelector } from "react-redux";
 
 function CarModel() {
-  const {  serverIP, loadingFinished } = useSelector((store) => store.allsettings);
+  const { serverIP } = useSelector((store) => store.allsettings);
   const [carModel, setCarModel] = useState([]);
   const [modalAdd, setModalAdd] = useState(false);
   const [modalEdit, setModalEdit] = useState(false);
@@ -17,7 +17,7 @@ function CarModel() {
 
   const [targetObj, setTargetObj] = useState({});
 
-  const [enName, setEnName] = useState('');
+  const [enName, setEnName] = useState("");
 
   useEffect(() => {
     getCarModel();
@@ -36,11 +36,11 @@ function CarModel() {
   };
 
   const saveCarModel = () => {
-    console.log('save');
+    console.log("save");
     setModalAdd(false);
     axios
       .post(`${serverIP}car_model/cars`, {
-        enName: enName
+        enName: enName,
       })
       .then(function (response) {
         console.log(response);
@@ -54,7 +54,7 @@ function CarModel() {
   const editCarModel = () => {
     axios
       .patch(`${serverIP}car_model/cars/${targetObj.id}`, {
-        enName: enName
+        enName: enName,
       })
       .then(function (response) {
         console.log(response);
@@ -83,7 +83,7 @@ function CarModel() {
     <div className="container">
       {/* Modal Delete Start  */}
       <Modal show={modalDelete} onHide={() => setModalDelete(false)}>
-        <Modal.Header style={{ color: 'red' }} closeButton>
+        <Modal.Header style={{ color: "red" }} closeButton>
           <Modal.Title color="red"> Delete </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -123,7 +123,7 @@ function CarModel() {
           <Modal.Title>Edit</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p style={{ paddingLeft: 10, color: 'red' }}> {targetObj.enName} </p>
+          <p style={{ paddingLeft: 10, color: "red" }}> {targetObj.enName} </p>
           <InputGroup className="mb-3">
             <InputGroup.Text id="basic-addon1">Name</InputGroup.Text>
             <Form.Control
@@ -143,9 +143,14 @@ function CarModel() {
       {/* Modals End  */}
 
       <Alert variant="info">
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
           <div> Car Model </div>
-          <Button variant="primary" style={{ margin: 0 }} className="btn btn-sm" onClick={() => setModalAdd(true)}>
+          <Button
+            variant="primary"
+            style={{ margin: 0 }}
+            className="btn btn-sm"
+            onClick={() => setModalAdd(true)}
+          >
             ADD
           </Button>
         </div>

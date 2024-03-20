@@ -41,12 +41,16 @@ import Review from "./Review/Review";
 import LoanOnAuditor from "./Role_Auditor/LoanOnAuditor";
 import CustomerMaritalMarriedEdit from "./Review/Edit/CustomerMaritalMarriedEdit";
 import CustomerMaritalSingleEdit from "./Review/Edit/CustomerMaritalSingleEdit";
-import CustomerLoanEdit from "./Review/Edit/CustomerLoanEdit"
+import CustomerLoanEdit from "./Review/Edit/CustomerLoanEdit";
 
 // Report
 import AgreementDoc from "./Reports/AgreementDoc";
 import Reports from "./Reports/Reports";
 import TextToAudio from "./Common/TextToAudio";
+import HelpApplicant from "./Help/HelpApplicant";
+import HelpAuditor from "./Help/HelpAuditor";
+import HelpOfficer from "./Help/HelpOfficer";
+import HelpPlanner from "./Help/HelpPlanner";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 let persistor = persistStore(store);
@@ -70,7 +74,7 @@ root.render(
                 }
               />
               <Route path="/texttoaudio" element={<TextToAudio />} />
-              
+
               {/* Collaterals  */}
               <Route path="/collaterals/:loanId" element={<Collaterals />} />
               <Route
@@ -117,6 +121,12 @@ root.render(
                 path="/customerloanedit/:customerId/:loanId"
                 element={<CustomerLoanEdit />}
               />
+
+              {/* Help  */}
+              <Route path="/helpapplicant" element={<HelpApplicant />} />
+              <Route path="/helpauditor" element={<HelpAuditor />} />
+              <Route path="/helpofficer" element={<HelpOfficer />} />
+              <Route path="/helpplanner" element={<HelpPlanner />} />
 
               {/* Officer  */}
               <Route

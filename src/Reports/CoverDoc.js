@@ -6,7 +6,6 @@ import {
   Page,
   Text,
   View,
-  Image,
   StyleSheet,
 } from "@react-pdf/renderer";
 import { PDFViewer } from "@react-pdf/renderer";
@@ -40,6 +39,7 @@ Font.register({
 });
 
 function CoverDoc() {
+  const { serverIP } = useSelector((store) => store.allsettings);
   const { customerId, loanId } = useParams();
   const [customer, setCustomer] = useState([]);
   const [loan, setLoan] = useState([]);

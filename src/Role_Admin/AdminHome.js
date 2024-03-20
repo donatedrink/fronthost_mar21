@@ -4,7 +4,7 @@ import { Badge, ListGroup } from "react-bootstrap";
 import { useSelector } from "react-redux";
 
 function AdminHome() {
-  const {  serverIP, loadingFinished } = useSelector((store) => store.allsettings);
+  const { serverIP } = useSelector((store) => store.allsettings);
   const [allCheckListTypes, setAllCheckListTypes] = useState([]);
   const [carManufactures, setCarManufactures] = useState([]);
   const [carModels, setCarModels] = useState([]);
@@ -64,7 +64,6 @@ function AdminHome() {
         console.log(err);
       });
   };
-
 
   return (
     <div className="container">

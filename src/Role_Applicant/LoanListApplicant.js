@@ -1,13 +1,13 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Button,  Table, Modal } from "react-bootstrap";
+import { Button, Table, Modal } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import LoanStatus from "../Common/LoanStatus";
 import { useSelector } from "react-redux";
 
 function LoanListApplicant() {
-  const {  serverIP, loadingFinished } = useSelector((store) => store.allsettings);
+  const { serverIP } = useSelector((store) => store.allsettings);
   const [loans, setLoans] = useState([]);
   const [filteredLoans, setFilteredLoans] = useState([]);
   const [officers, setOfficers] = useState([]);

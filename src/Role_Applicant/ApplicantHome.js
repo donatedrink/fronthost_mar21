@@ -6,11 +6,10 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import ListGroup from "react-bootstrap/ListGroup";
 import { ToastContainer, toast } from "react-toastify";
-import { useDispatch, useSelector } from 'react-redux';
-
+import { useSelector } from "react-redux";
 
 function ApplicantHome() {
-  const {  serverIP, loadingFinished } = useSelector((store) => store.allsettings);
+  const { serverIP } = useSelector((store) => store.allsettings);
 
   const [externalId, setExternalId] = useState(0);
   const [activeLoanPlan, setActiveLoanPlan] = useState({});
@@ -18,11 +17,16 @@ function ApplicantHome() {
   const [amisisClient, setAmisisClient] = useState([]);
   const [searchDone, setSearchDone] = useState(false);
   const [amisisUser, setAmisisUser] = useState([]);
+  const [amisisUserDetails, setAmisisUserDetails] = useState([]);
 
   const [savingAccountTotal, setSavingAccountTotal] = useState(0);
   const [shareAccountTotal, setShareAccountTotal] = useState(0);
 
   const [amisiLoanPlan, setAmisiLoanPlan] = useState([]);
+
+  const [objServiceCharge, setObjServiceCharge] = useState([]);
+  const [objLifeInsurance, setObjLifeInsurance] = useState({});
+  const [objTembir, setObjTembir] = useState({});
 
   const toastLoanFound = () => toast.success("Loan Plan Exist!");
 
@@ -30,6 +34,16 @@ function ApplicantHome() {
     Object.keys(activeLoanPlan).length > 0 &&
       getLoanPlanFromAmisisAndUpdateLpsLoanPlan(activeLoanPlan.id);
   }, [activeLoanPlan]);
+
+  function formatDateForDjango(year, month, day) {
+    // JavaScript months are 0-indexed (January = 0, December = 11),
+    // so we need to add 1 to align with the common 1-12 month range.
+    const adjustedMonth = month < 10 ? `0${month}` : month.toString();
+    const adjustedDay = day < 10 ? `0${day}` : day.toString();
+
+    // Return the formatted string in 'YYYY-MM-DD' format
+    return `${year}-${adjustedMonth}-${adjustedDay}`;
+  }
 
   const getClientByExternalId = () => {
     axios
@@ -41,8 +55,9 @@ function ApplicantHome() {
       .then((res) => {
         console.log(res.data);
         setAmisisClient(res.data);
-        amisisUserDetail(res.data[0]?.entityAccountNo);
+        getamisisUser(res.data[0]?.entityAccountNo);
         checkLoanPlan(res.data[0]?.entityAccountNo);
+        getamisisUserDetail(res.data[0]?.entityAccountNo);
         searchUserOn_Django();
       })
       .catch((err) => {
@@ -50,12 +65,27 @@ function ApplicantHome() {
       });
   };
 
-  const amisisUserDetail = (entityAccountNo) => {
+  const getamisisUserDetail = (entityAccountNo) => {
+    // http://localhost:8000/fineract/userdetail?entityAccountNo=000002330
     axios
-      .get(
-        `${serverIP}fineract/clientbyid?entityAccountNo=${entityAccountNo}`
-      )
+      .get(`${serverIP}fineract/userdetail?entityAccountNo=${entityAccountNo}`)
       .then((res) => {
+        console.log("getamisisUserDetail");
+        console.log(res.data);
+        setAmisisUserDetails(res.data);
+      })
+      .catch((err) => {
+        console.log("error calling fineract");
+        console.log(err);
+      });
+  };
+
+  const getamisisUser = (entityAccountNo) => {
+    axios
+      .get(`${serverIP}fineract/clientbyid?entityAccountNo=${entityAccountNo}`)
+      .then((res) => {
+        console.log("getamisisUser");
+        console.log(res.data);
         setAmisisUser(res.data);
       })
       .catch((err) => {
@@ -66,12 +96,11 @@ function ApplicantHome() {
 
   const checkLoanPlan = (entityAccountNo) => {
     axios
-      .get(
-        `${serverIP}fineract/allsaving?entityAccountNo=${entityAccountNo}`
-      )
+      .get(`${serverIP}fineract/allsaving?entityAccountNo=${entityAccountNo}`)
       .then((res) => {
         console.log("loan plan exisit");
         console.log(res.data);
+
         setSearchDone(true);
 
         const sum_savings = res.data.savingsAccounts?.reduce((accum, obj) => {
@@ -130,6 +159,16 @@ function ApplicantHome() {
         numberOfRepayments: amisiLoanPlan.numberOfRepayments,
         totalDueForPeriod:
           amisiLoanPlan.repaymentSchedule.periods[2].totalDueForPeriod,
+
+        // prcntServiceCharge: objServiceCharge[0]?.percentage,
+        // prcntLifeInsurance: objLifeInsurance[0]?.percentage,
+        // multiplier: 2,
+        // flatServiceCharge: objServiceCharge[0]?.amount,
+        // flatLifeInsurance: objLifeInsurance[0]?.amount,
+        // tembr: objTembir[0]?.amount,
+
+        totalInterestPayment: amisisUserDetails.repaymentSchedule?.totalInterestCharged,
+
       })
       .then((res) => {
         console.log(res.data);
@@ -148,6 +187,21 @@ function ApplicantHome() {
       .then(function (response) {
         console.log("loan plan response.data");
         console.log(response.data);
+        setObjServiceCharge(
+          response.data.charges?.filter((x) =>
+            x.name.toString().includes("CHA")
+          )
+        );
+        setObjLifeInsurance(
+          response.data.charges?.filter((x) =>
+            x.name.toString().includes("INSU")
+          )
+        );
+        setObjTembir(
+          response.data.charges?.filter((x) =>
+            x.name.toString().includes("TEMB")
+          )
+        );
         setAmisiLoanPlan(response.data);
       })
       .catch(function (error) {
@@ -158,9 +212,19 @@ function ApplicantHome() {
   const copyFineractUserToLocalDatabase = () => {
     axios
       .post(`${serverIP}customer/customers/`, {
-        entityAccountNo: amisisUser.accountNo,
+        entityAccountNo: amisisUserDetails.accountNo,
         entityExternalId: amisisUser.externalId,
-        activationDate: "2024-01-17",
+        // expectedDisbursementDate: formatDateForDjango(
+        //   amisisUserDetails?.timeline?.expectedDisbursementDate[0],
+        //   amisisUserDetails?.timeline?.expectedDisbursementDate[1],
+        //   amisisUserDetails?.timeline?.expectedDisbursementDate[2]
+        // ),
+
+        activationDate: formatDateForDjango(
+          amisisUserDetails?.activationDate[0],
+          amisisUserDetails?.activationDate[1],
+          amisisUserDetails?.activationDate[2]
+        ),
         active: amisisUser.active,
         displayName: amisisUser.displayName,
         amDisplayName: amisisUser.displayName,
@@ -174,11 +238,12 @@ function ApplicantHome() {
         mobileNo: amisisUser.mobileNo,
         address: "Addis Ababa",
         amAddress: "Addis Ababa",
-        dateOfBirth: "2024-01-17",
+        dateOfBirth: formatDateForDjango(
+          amisisUserDetails?.dateOfBirth[0],
+          amisisUserDetails?.dateOfBirth[1],
+          amisisUserDetails?.dateOfBirth[2]
+        ),
         isMarried: false,
-
-        address: "",
-        amAddress: "",
 
         subcity: "",
         amSubcity: "",
@@ -192,7 +257,7 @@ function ApplicantHome() {
       })
       .catch((err) => {
         console.log(" catch");
-        console.log(err)
+        console.log(err);
       });
   };
 
@@ -244,22 +309,29 @@ function ApplicantHome() {
                             entityAccountNo: {amisisUser.accountNo}
                           </ListGroup.Item>
                           <ListGroup.Item>
-                            Account : {amisisUser.active ? "Active" : "Closed"}
+                            Account: {amisisUser.active ? "Active" : "Closed"}
                           </ListGroup.Item>
                           <ListGroup.Item>
-                            Gender : {amisisUser.gender?.name}
+                            Gender: {amisisUser.gender?.name}
                           </ListGroup.Item>
                           <ListGroup.Item>
-                            mobileNo : {amisisUser.mobileNo}
+                            mobileNo: {amisisUser.mobileNo}
                           </ListGroup.Item>
                           <ListGroup.Item>
-                            Marital Status :
-                            {amisisUser.isMarried ? "Married" : "Single"}
+                            Marital Status:
+                            {amisisUser.isMarried ? " Married" : " Single"}
                           </ListGroup.Item>
                           <ListGroup.Item>
-                            activationDate : {amisisUser.activationDate}
+                            activationDate: {amisisUser.activationDate}
                           </ListGroup.Item>
-                          <ListGroup.Item> dateOfBirth : </ListGroup.Item>
+                          <ListGroup.Item>
+                            dateOfBirth:
+                            {amisisUserDetails?.dateOfBirth[0] +
+                              "/" +
+                              amisisUserDetails?.dateOfBirth[1] +
+                              "/" +
+                              amisisUserDetails?.dateOfBirth[2]}
+                          </ListGroup.Item>
                         </ListGroup>
                         <Card.Footer>
                           {djangoUser.length > 0 ? (
@@ -309,31 +381,47 @@ function ApplicantHome() {
                     <Card.Header> Loan Plan </Card.Header>
                     <ListGroup>
                       <ListGroup.Item>
-                        Saving: {savingAccountTotal}
+                        Saving: {savingAccountTotal?.toLocaleString()}
                       </ListGroup.Item>
                       <ListGroup.Item>
-                        Share: {shareAccountTotal}
+                        Share: {shareAccountTotal?.toLocaleString()}
                       </ListGroup.Item>
 
                       {Object.keys(amisiLoanPlan).length > 0 ? (
                         <>
                           <ListGroup.Item>
                             Approved Principal:
-                            {amisiLoanPlan.approvedPrincipal}
+                            {" " +
+                              amisiLoanPlan.approvedPrincipal?.toLocaleString()}
                           </ListGroup.Item>
                           <ListGroup.Item>
                             Interest: {amisiLoanPlan.annualInterestRate + " %"}
                           </ListGroup.Item>
                           <ListGroup.Item>
                             Monthly Pay:
-                            {
-                              amisiLoanPlan.repaymentSchedule.periods[2]
-                                ?.totalDueForPeriod
-                            }
+                            {" " +
+                              amisiLoanPlan.repaymentSchedule?.periods[2]?.totalDueForPeriod?.toLocaleString()}
                           </ListGroup.Item>
                           <ListGroup.Item>
                             Nmber of repayments:
-                            {amisiLoanPlan.numberOfRepayments + " Months"}
+                            {" " + amisiLoanPlan.numberOfRepayments + " Months"}
+                          </ListGroup.Item>
+                          <ListGroup.Item>
+                            Tembir: {objTembir[0]?.amount}{" "}
+                          </ListGroup.Item>
+                          <ListGroup.Item>
+                            {" "}
+                            Service Charge:{" "}
+                            {objServiceCharge[0]?.percentage +
+                              "% => " +
+                              objServiceCharge[0]?.amount}{" "}
+                          </ListGroup.Item>
+                          <ListGroup.Item>
+                            {" "}
+                            Life Insurance:{" "}
+                            {objLifeInsurance[0]?.percentage +
+                              "% => " +
+                              objLifeInsurance[0]?.amount}{" "}
                           </ListGroup.Item>
                         </>
                       ) : (

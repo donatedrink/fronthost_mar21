@@ -9,10 +9,10 @@ import { Card, CardHeader, CardBody, CardFooter } from "react-bootstrap";
 import ProgressBar from "react-bootstrap/ProgressBar";
 import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
 
 function CarMarketValue(props) {
-  const {  serverIP, loadingFinished } = useSelector((store) => store.allsettings);
+  const { serverIP } = useSelector((store) => store.allsettings);
 
   const [marketValue, setMarketValue] = useState(0);
 
@@ -37,9 +37,7 @@ function CarMarketValue(props) {
 
   const getAllFiles = () => {
     axios
-      .get(
-        `${serverIP}collateral_car/collateralcar/${props.collateralId}`
-      )
+      .get(`${serverIP}collateral_car/collateralcar/${props.collateralId}`)
       .then((res) => {
         console.log(res.data);
         setChklstUploaded(res.data);
@@ -111,20 +109,24 @@ function CarMarketValue(props) {
     });
 
     axios
-      .patch(`${serverIP}car_marketvalue/carmarketvalues/${targetMarketValue.id}/`, fd, {
-        onUploadProgress: (progressEvent) => {
-          setProgress((prevState) => {
-            return { ...prevState, pc: progressEvent.progress * 100 };
-          });
-        },
-        headers: {
-          "Custom-Header": "value",
-        },
-      })
+      .patch(
+        `${serverIP}car_marketvalue/carmarketvalues/${targetMarketValue.id}/`,
+        fd,
+        {
+          onUploadProgress: (progressEvent) => {
+            setProgress((prevState) => {
+              return { ...prevState, pc: progressEvent.progress * 100 };
+            });
+          },
+          headers: {
+            "Custom-Header": "value",
+          },
+        }
+      )
       .then((res) => {
         setMsg("Upload Successful");
         console.log(res.data);
-        setEditModal(false)
+        setEditModal(false);
         setErr(false);
         getAllFiles();
       })

@@ -1,15 +1,17 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import AgreementDoc from "./AgreementDoc";
-import { Alert, ListGroup, Accordion } from "react-bootstrap";
+import { Alert, Accordion } from "react-bootstrap";
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
 import CoverDoc from "./CoverDoc";
 import RequestFormDoc from "./RequestFormDoc";
 import GuaranteeDoc from "./GuaranteeDoc";
+import { useSelector } from "react-redux";
 
 function Reports() {
+  const { serverIP } = useSelector((store) => store.allsettings);
   const { customerId, loanId } = useParams();
   const [customer, setCustomer] = useState([]);
   const [loan, setLoan] = useState([]);

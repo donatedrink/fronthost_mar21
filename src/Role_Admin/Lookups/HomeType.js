@@ -8,7 +8,7 @@ import InputGroup from "react-bootstrap/InputGroup";
 import { useSelector } from "react-redux";
 
 function HomeType() {
-  const {  serverIP, loadingFinished } = useSelector((store) => store.allsettings);
+  const { serverIP } = useSelector((store) => store.allsettings);
   const [homeType, setHomeType] = useState([]);
   const [modalAdd, setModalAdd] = useState(false);
   const [modalEdit, setModalEdit] = useState(false);

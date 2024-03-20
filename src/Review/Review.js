@@ -3,10 +3,10 @@ import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { Alert, Card } from "react-bootstrap";
-import { FaCarAlt, FaHome, FaTrashAlt, FaUserAlt } from 'react-icons/fa';
+import { FaCarAlt } from "react-icons/fa";
 
 function Review() {
-  const {  serverIP, loadingFinished } = useSelector((store) => store.allsettings);
+  const { serverIP } = useSelector((store) => store.allsettings);
   const { data } = useSelector((store) => store.customer);
   const { customerId, loanId } = useParams();
   const [customer, setCustomer] = useState([]);
@@ -121,14 +121,19 @@ function Review() {
                   {loan.collateralcar?.map((car) => {
                     return (
                       <tr>
-                        <td> <FaCarAlt /> </td>
+                        <td>
+                          {" "}
+                          <FaCarAlt />{" "}
+                        </td>
                         <td>{car.model.enName}</td>
                         <td>
-                          {((car.insuranceValue *
-                            car.manufacturedYear.multiplierRatio +
-                            car.marketvalue[0]?.marketValue +
-                            car.garageReport[0]?.garageValue) /
-                            3)?.toLocaleString()}
+                          {(
+                            (car.insuranceValue *
+                              car.manufacturedYear.multiplierRatio +
+                              car.marketvalue[0]?.marketValue +
+                              car.garageReport[0]?.garageValue) /
+                            3
+                          )?.toLocaleString()}
                         </td>
                       </tr>
                     );
@@ -137,8 +142,6 @@ function Review() {
               ) : (
                 <></>
               )}
-
-             
             </tbody>
           </table>
 

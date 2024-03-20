@@ -14,6 +14,7 @@ import Btable from "./Table/Btable";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import AgreementHeader from "./AgreementDoc/AgreementHeader";
+import { useSelector } from "react-redux";
 
 const Styles = StyleSheet.create({
   text: {
@@ -51,6 +52,7 @@ const Subtitle = ({ children, ...props }) => (
 );
 
 function AgreementDoc() {
+  const { serverIP } = useSelector((store) => store.allsettings);
   const { customerId, loanId } = useParams();
   const [customer, setCustomer] = useState([]);
   const [loan, setLoan] = useState([]);

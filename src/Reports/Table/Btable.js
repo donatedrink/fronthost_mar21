@@ -20,7 +20,8 @@ function Btable(props) {
           borderColor: "black",
           borderStyle: "solid",
           width: "5%",
-          padding: 2,
+          paddingLeft: 2,
+          paddingBottom: 1,
         }}
       >
         <Text>{props.zid}</Text>
@@ -34,6 +35,7 @@ function Btable(props) {
           borderStyle: "solid",
           width: "60%",
           paddingLeft: 2,
+          paddingBottom: 1,
         }}
       >
         <Text style={{ textAlign: props.textalign }}>{props.zkey}</Text>
@@ -46,6 +48,7 @@ function Btable(props) {
           borderStyle: "solid",
           width: "35%",
           paddingLeft: 2,
+          paddingBottom: 1,
         }}
       >
         <Text>{props.zvalue}</Text>

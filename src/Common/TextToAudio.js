@@ -6,9 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { changeIP } from "./redux/settingSlice";
 
 function TextToAudio() {
-  const {  serverIP, loadingFinished } = useSelector(
-    (store) => store.allsettings
-  );
+  const { serverIP } = useSelector((store) => store.allsettings);
   const [texts, setTexts] = useState("");
   const [ipAddress, setIpAddress] = useState("");
   const dispatch = useDispatch();

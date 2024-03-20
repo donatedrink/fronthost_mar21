@@ -8,10 +8,10 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import { FaCarAlt, FaPencilAlt, FaTrashAlt } from "react-icons/fa";
 import { Badge } from "react-bootstrap";
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
 
 function CarCollateral(props) {
-  const {  serverIP, loadingFinished } = useSelector((store) => store.allsettings);
+  const { serverIP } = useSelector((store) => store.allsettings);
   const [loan, setLoan] = useState([]);
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
@@ -101,9 +101,7 @@ function CarCollateral(props) {
 
   const deleteCar = () => {
     axios
-      .delete(
-        `${serverIP}collateral_car/collateralcar/${targetCar.id}`
-      )
+      .delete(`${serverIP}collateral_car/collateralcar/${targetCar.id}`)
       .then((res) => {
         console.log(res.data);
         setShowDeleteModal(false);
